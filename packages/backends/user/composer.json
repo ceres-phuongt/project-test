@@ -1,0 +1,22 @@
+{
+    "name": "Backend/User",
+    "description": "The user module for backend",
+    "type": "package",
+    "autoload": {
+        "psr-4": {
+            "Backend\\User\\": "src",
+            "Backend\\User\\Tests\\": "tests"
+        }
+    },
+    "require": {
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Backend\\User\\Providers\\UserServiceProvider"
+            ],
+            "aliases": {
+            }
+        }
+    }
+}

@@ -1,0 +1,19 @@
+{
+    "name": "backend/core",
+    "description": "The backend core module",
+    "type": "package",
+    "autoload": {
+        "psr-4": {
+            "Backend\\Core\\": "src"
+        }
+    },
+    "require": {
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Backend\\Core\\Providers\\CoreServiceProvider"
+            ]
+        }
+    }
+}
