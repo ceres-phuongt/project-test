@@ -17,7 +17,15 @@ class LoginController extends Controller
     |
     */
 
-
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        return view('backend/user::auth.login');
+    }
 
     /**
      * Handle an incoming authentication request.
@@ -48,6 +56,6 @@ class LoginController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect->route('backend.auth.login');
+        return redirect()->route('auth.login');
     }
 }

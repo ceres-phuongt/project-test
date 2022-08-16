@@ -1,5 +1,5 @@
 {
-    "name": "Backend/User",
+    "name": "backend/user",
     "description": "The user module for backend",
     "type": "package",
     "autoload": {
@@ -8,15 +8,11 @@
             "Backend\\User\\Tests\\": "tests"
         }
     },
-    "require": {
-    },
     "extra": {
         "laravel": {
             "providers": [
                 "Backend\\User\\Providers\\UserServiceProvider"
-            ],
-            "aliases": {
-            }
+            ]
         }
     }
 }

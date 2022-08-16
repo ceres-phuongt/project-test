@@ -7,8 +7,6 @@
             "Backend\\Core\\": "src"
         }
     },
-    "require": {
-    },
     "extra": {
         "laravel": {
             "providers": [

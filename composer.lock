@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "be3fd4f8c4adec68cc04636ae53bff02",
+    "content-hash": "dc745f841e82eb4891c04ab0709b2048",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -61,6 +61,59 @@
                 "source": "https://github.com/asm89/stack-cors/tree/v2.1.1"
             },
             "time": "2022-01-18T09:12:03+00:00"
+        },
+        {
+            "name": "backend/core",
+            "version": "dev-master",
+            "dist": {
+                "type": "path",
+                "url": "./packages/backends/core",
+                "reference": "f4336a373ad8a8dc8dd14c81349c19308b9d3dd5"
+            },
+            "type": "package",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Backend\\Core\\Providers\\CoreServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Backend\\Core\\": "src"
+                }
+            },
+            "description": "The backend core module",
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
+            "name": "backend/user",
+            "version": "dev-master",
+            "dist": {
+                "type": "path",
+                "url": "./packages/backends/user",
+                "reference": "50f965980ca0e01ab258868a96ed907e04a717ce"
+            },
+            "type": "package",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Backend\\User\\Providers\\UserServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Backend\\User\\": "src",
+                    "Backend\\User\\Tests\\": "tests"
+                }
+            },
+            "description": "The user module for backend",
+            "transport-options": {
+                "relative": true
+            }
         },
         {
             "name": "brick/math",
@@ -7597,7 +7650,10 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "backend/core": 20,
+        "backend/user": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
