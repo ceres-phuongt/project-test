@@ -13,7 +13,8 @@
         "laravel/tinker": "^2.5",
         "backend/core": "*@dev",
         "backend/user": "*@dev",
-        "backend/dashboard": "*@dev"
+        "backend/dashboard": "*@dev",
+        "backend/car": "*@dev"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

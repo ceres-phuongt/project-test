@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7ceb05155d71e66ece5e8e2be9e2f9d0",
+    "content-hash": "84e07105748989560771322ff7832554",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -61,6 +61,33 @@
                 "source": "https://github.com/asm89/stack-cors/tree/v2.1.1"
             },
             "time": "2022-01-18T09:12:03+00:00"
+        },
+        {
+            "name": "backend/car",
+            "version": "dev-master",
+            "dist": {
+                "type": "path",
+                "url": "./packages/backends/car",
+                "reference": "fe760ee3ef562c82f42111cfc11c17c203861ee4"
+            },
+            "type": "package",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Backend\\Car\\Providers\\CarServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Backend\\Car\\": "src",
+                    "Backend\\Car\\Tests\\": "tests"
+                }
+            },
+            "description": "The car module for backend",
+            "transport-options": {
+                "relative": true
+            }
         },
         {
             "name": "backend/core",
@@ -8022,7 +8049,8 @@
     "stability-flags": {
         "backend/core": 20,
         "backend/user": 20,
-        "backend/dashboard": 20
+        "backend/dashboard": 20,
+        "backend/car": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,

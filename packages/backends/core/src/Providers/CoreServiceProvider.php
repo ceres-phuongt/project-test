@@ -3,6 +3,8 @@
 namespace Backend\Core\Providers;
 
 use App\Http\Middleware\VerifyCsrfToken;
+use Backend\Core\Repositories\Eloquent\BaseRepository;
+use Backend\Core\Repositories\Interfaces\RepositoryInterface;
 use Illuminate\Contracts\Debug\ExceptionHandler;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Routing\Events\RouteMatched;
@@ -13,7 +15,11 @@ use Illuminate\Support\ServiceProvider;
 
 class CoreServiceProvider extends ServiceProvider
 {
-    // backend/core/src/Providers/CoreServiceProvider.php
+    // public function register()
+    // {
+    //     $this->app->bind(RepositoryInterface::class, BaseRepository::class);
+    // }
+
     public function boot()
     {
         // NOTE: Load views, the same as load routes
