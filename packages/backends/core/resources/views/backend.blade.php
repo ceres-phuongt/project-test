@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="{{ asset('vendor/backends/core/plugins/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('vendor/backends/core/dist/css/adminlte.min.css') }}">
+    @toastr_css
 </head>
 
 <body class="hold-transition dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
@@ -71,6 +72,8 @@
     <script src="{{ asset('vendor/backends/core/dist/js/pages/dashboard2.js') }}"></script>
 
     @yield('footer')
+    @toastr_js
+    @toastr_render
 </body>
 
 </html>

@@ -7,6 +7,9 @@
             "Backend\\Core\\": "src"
         }
     },
+    "require": {
+        "yoeunes/toastr": "^2.0"
+    },
     "extra": {
         "laravel": {
             "providers": [
