@@ -26,9 +26,6 @@
         <div class="card-header">
             <h3 class="card-title">{{ __('Car') }}</h3>
             <div class="card-tools">
-                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                    <i class="fas fa-minus"></i>
-                </button>
                 <a href="{{ route('car.create') }}" class="btn btn-tool" title="Remove">Add New</a>
             </div>
         </div>
@@ -144,7 +141,7 @@
                 <li class="page-item"><a class="page-link" href="#">3</a></li>
                 <li class="page-item"><a class="page-link" href="#">»</a></li>
             </ul> --}}
-            {{ $cars->links() }}
+            {{ $cars->links('backend/core::vendor.pagination.default') }}
         </div>
     </div>
     <!-- /.card -->

@@ -33,7 +33,7 @@ class Authenticate extends BaseAuthenticate
     protected function redirectTo($request)
     {
         if (! $request->expectsJson()) {
-            return route('auth.login');
+            return route('auth.create');
         }
     }
 }

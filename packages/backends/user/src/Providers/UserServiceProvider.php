@@ -2,9 +2,8 @@
 
 namespace Backend\User\Providers;
 
-use App\Http\Middleware\Authenticate;
 use App\Http\Middleware\VerifyCsrfToken;
-use Backend\User\Http\Middleware\CheckUserLoginMiddleware;
+use Backend\User\Http\Middleware\Authenticate;
 use Backend\User\Http\Middleware\RedirectIfAuthenticated;
 use Backend\User\Models\User;
 use Illuminate\Contracts\Debug\ExceptionHandler;

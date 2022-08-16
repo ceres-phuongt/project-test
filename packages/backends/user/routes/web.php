@@ -7,7 +7,6 @@ Route::group(['namespace' => 'Backend\User\Http\Controllers', 'middleware' => ['
     Route::group(['prefix' => 'auth', 'as' => 'auth.'], function () {
         Route::get('login', ['as' => 'create', 'uses' => 'Auth\LoginController@create']);
         Route::post('login', ['as' => 'store', 'uses' => 'Auth\LoginController@store']);
-//        Route::delete('logout', ['as' => 'destroy', 'uses' => 'Auth\LoginController@destroy']);
         Route::get('logout', ['as' => 'logout', 'uses' => 'Auth\LoginController@logOut']);
     });
 
