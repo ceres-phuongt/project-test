@@ -11,7 +11,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Backend\\User\\Providers\\UserServiceProvider"
+              "Backend\\User\\Providers\\UserServiceProvider"
             ]
         }
     }

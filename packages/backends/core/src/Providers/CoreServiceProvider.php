@@ -20,7 +20,7 @@ class CoreServiceProvider extends ServiceProvider
         $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'backend/core');
 
         // NOTE: Load configs
-        $this->mergeConfigFrom(__DIR__ . '/../../config/core.php', 'core');
+        $this->mergeConfigFrom(__DIR__ . '/../../config/general.php', 'core');
     }
 
     public function provides()

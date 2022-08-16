@@ -2,7 +2,11 @@
 
 namespace Backend\User\Providers;
 
+use App\Http\Middleware\Authenticate;
 use App\Http\Middleware\VerifyCsrfToken;
+use Backend\User\Http\Middleware\CheckUserLoginMiddleware;
+use Backend\User\Http\Middleware\RedirectIfAuthenticated;
+use Backend\User\Models\User;
 use Illuminate\Contracts\Debug\ExceptionHandler;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Routing\Events\RouteMatched;
@@ -14,7 +18,6 @@ use Backend\User\Commands\DemoCommand;
 use Backend\User\Exceptions\CustomHandlerException;
 use Backend\User\Facades\CoreFacadeLoadedDirectlyFacade;
 use Backend\User\Http\Middleware\CustomVerifyCsrfTokenMiddleware;
-use Backend\User\Http\Middleware\DemoMiddleware;
 
 class UserServiceProvider extends ServiceProvider
 {
@@ -38,12 +41,19 @@ class UserServiceProvider extends ServiceProvider
         // NOTE: Load configs
         $this->mergeConfigFrom(__DIR__ . '/../../config/user.php', 'user');
 
-        $this->app->bind('core', function () {
-            return new Core();
+        Event::listen(RouteMatched::class, function () {
+            /**
+             * @var Router $router
+             */
+            $router = $this->app['router'];
+
+            $router->aliasMiddleware('auth', Authenticate::class);
+            $router->aliasMiddleware('guest', RedirectIfAuthenticated::class);
         });
 
-        // NOTE: This facade can be loaded directly via PHP code, not using composer
-        AliasLoader::getInstance()->alias('CoreFacadeLoadedDirectly', CoreFacadeLoadedDirectlyFacade::class);
+        $this->app->booted(function () {
+            config()->set(['auth.providers.users.model' => User::class]);
+        });
     }
 
     public function provides()

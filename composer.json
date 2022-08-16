@@ -12,7 +12,8 @@
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
         "backend/core": "*@dev",
-        "backend/user": "*@dev"
+        "backend/user": "*@dev",
+        "backend/dashboard": "*@dev"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

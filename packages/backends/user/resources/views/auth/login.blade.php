@@ -5,10 +5,10 @@
     <div class="card-body login-card-body">
         <p class="login-box-msg">{{ __('Sign in to start your session') }}</p>
 
-        <form action="{{!! route('auth.store') !!}" method="post">
+        <form action="{!! route('auth.store') !!}" method="post">
             {!! csrf_field() !!}
             <div class="input-group mb-3">
-                <input type="email" class="form-control {{ $errors->has('email') ? ' is-invalid' : '' }}" placeholder="{{ __('Email') }}">
+                <input type="email" name="email" class="form-control {{ $errors->has('email') ? ' is-invalid' : '' }}" placeholder="{{ __('Email') }}">
                 <div class="input-group-append">
                     <div class="input-group-text">
                         <span class="fas fa-envelope"></span>
@@ -19,7 +19,7 @@
                 @endif
             </div>
             <div class="input-group mb-3">
-                <input type="password" class="form-control {{ $errors->has('password') ? ' is-invalid' : '' }}" placeholder="{{ __('Password') }}">
+                <input type="password" name="password" class="form-control {{ $errors->has('password') ? ' is-invalid' : '' }}" placeholder="{{ __('Password') }}">
                 <div class="input-group-append">
                     <div class="input-group-text">
                         <span class="fas fa-lock"></span>
@@ -32,7 +32,7 @@
             <div class="row">
                 <div class="col-8">
                     <div class="icheck-primary">
-                        <input type="checkbox" id="remember">
+                        <input type="checkbox" id="remember" name="remember">
                         <label for="remember">
                             {{ __('Remember Me') }}
                         </label>

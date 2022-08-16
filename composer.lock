@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "dc745f841e82eb4891c04ab0709b2048",
+    "content-hash": "7ceb05155d71e66ece5e8e2be9e2f9d0",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -89,12 +89,38 @@
             }
         },
         {
+            "name": "backend/dashboard",
+            "version": "dev-master",
+            "dist": {
+                "type": "path",
+                "url": "./packages/backends/dashboard",
+                "reference": "5b92d21d8c16ca7665c6adada51621a2879966d6"
+            },
+            "type": "package",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Backend\\Dashboard\\Providers\\DashboardServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Backend\\Dashboard\\": "src"
+                }
+            },
+            "description": "The dashboard module for backend",
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
             "name": "backend/user",
             "version": "dev-master",
             "dist": {
                 "type": "path",
                 "url": "./packages/backends/user",
-                "reference": "50f965980ca0e01ab258868a96ed907e04a717ce"
+                "reference": "24e858b1df0efcd45ccab324b391f8f080e96214"
             },
             "type": "package",
             "extra": {
@@ -7652,7 +7678,8 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "backend/core": 20,
-        "backend/user": 20
+        "backend/user": 20,
+        "backend/dashboard": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,

@@ -1,0 +1,17 @@
+{
+    "name": "backend/dashboard",
+    "description": "The dashboard module for backend",
+    "type": "package",
+    "autoload": {
+        "psr-4": {
+            "Backend\\Dashboard\\": "src"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Backend\\Dashboard\\Providers\\DashboardServiceProvider"
+            ]
+        }
+    }
+}

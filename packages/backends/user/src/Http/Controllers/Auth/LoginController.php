@@ -3,6 +3,8 @@
 namespace Backend\User\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use Backend\User\Http\Requests\Auth\LoginRequest;
+use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
@@ -39,7 +41,7 @@ class LoginController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->route('backend.dashboard.index');
+        return redirect()->route('dashboard.index');
     }
 
     /**
@@ -50,12 +52,29 @@ class LoginController extends Controller
      */
     public function destroy(Request $request)
     {
-        Auth::guard('web')->logout();
+        \Auth::guard('web')->logout();
 
         $request->session()->invalidate();
 
         $request->session()->regenerateToken();
 
         return redirect()->route('auth.login');
+    }
+
+    /**
+     * Destroy an authenticated session.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function logOut(Request $request)
+    {
+        \Auth::guard('web')->logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return redirect()->route('auth.create');
     }
 }
