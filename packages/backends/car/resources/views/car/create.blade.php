@@ -144,13 +144,6 @@
     </form>
     <!-- /.card -->
 </section>
-
-@section('footer')
-    <script src="{{ asset('vendor/backends/core/plugins/inputmask/jquery.inputmask.min.js') }}"></script>
-    <script type="text/javascript">
-        $(function () {
-            $('#price').inputmask();
-        });
-    </script>
 @endsection
+@section('footer')
 @endsection
