@@ -3,25 +3,25 @@
 namespace Backend\Car\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use Backend\Car\Http\Requests\TagRequest;
-use Backend\Car\Repositories\Interfaces\EngineSizeInterface;
+use Backend\Car\Http\Requests\MakeRequest;
+use Backend\Car\Repositories\Interfaces\MakeInterface;
 
-class TagController extends Controller
+class MakeController extends Controller
 {
     /**
-     * [$tagRepository description]
+     * [$makeRepository description]
      * @var [type]
      */
-    protected $tagRepository;
+    protected $makeRepository;
 
     /**
      * [__contruct description]
-     * @param  EngineSizeInterface  $tagRepository  [description]
+     * @param  MakeInterface  $makeRepository  [description]
      * @return [type]                       [description]
      */
-    public function __construct(EngineSizeInterface $tagRepository)
+    public function __construct(MakeInterface $makeRepository)
     {
-        $this->tagRepository = $tagRepository;
+        $this->makeRepository = $makeRepository;
     }
 
     /**
@@ -31,9 +31,9 @@ class TagController extends Controller
      */
     public function index()
     {
-        $tags = $this->tagRepository->paginate(10);
+        $makes = $this->makeRepository->paginate(10);
 
-        return view('backend/car::tag.index', compact('tags'));
+        return view('backend/car::make.index', compact('makes'));
     }
 
     /**
@@ -43,7 +43,7 @@ class TagController extends Controller
      */
     public function create()
     {
-        return view('backend/car::tag.create');
+        return view('backend/car::make.create');
     }
 
     /**
@@ -52,16 +52,16 @@ class TagController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(TagRequest $request)
+    public function store(MakeRequest $request)
     {
         $inputs = $request->only('name', 'description', 'status');
-        if ($this->tagRepository->create($inputs)) {
-            toastr()->success('Create tag success');
+        if ($this->makeRepository->create($inputs)) {
+            toastr()->success('Create make success');
         } else {
             toastr()->error('Something went wrong!');
         }
 
-        return redirect()->route('tag.index');
+        return redirect()->route('make.index');
     }
 
     /**
@@ -72,9 +72,9 @@ class TagController extends Controller
      */
     public function show($id)
     {
-        $tag = $this->tagRepository->find($id);
+        $make = $this->makeRepository->find($id);
 
-        return view('backend/car::tag.show', compact('tag'));
+        return view('backend/car::make.show', compact('make'));
     }
 
     /**
@@ -85,9 +85,9 @@ class TagController extends Controller
      */
     public function edit($id)
     {
-        $tag = $this->tagRepository->find($id);
+        $make = $this->makeRepository->find($id);
 
-        return view('backend/car::tag.edit', compact('tag'));
+        return view('backend/car::make.edit', compact('make'));
     }
 
     /**
@@ -97,17 +97,17 @@ class TagController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(TagRequest $request, $id)
+    public function update(MakeRequest $request, $id)
     {
         $inputs = $request->only('name', 'description', 'status');
 
-        if ($this->tagRepository->update($id, $inputs)) {
-            toastr()->success('Update tag success');
+        if ($this->makeRepository->update($id, $inputs)) {
+            toastr()->success('Update make success');
         } else {
             toastr()->error('Something went wrong!');
         }
 
-        return redirect()->route('tag.index');
+        return redirect()->route('make.index');
     }
 
     /**
@@ -118,12 +118,12 @@ class TagController extends Controller
      */
     public function destroy($id)
     {
-        if ($deleted = $this->tagRepository->delete($id)) {
-            toastr()->success('Delete tag success');
+        if ($deleted = $this->makeRepository->delete($id)) {
+            toastr()->success('Delete make success');
         } else {
             toastr()->error('Something went wrong!');
         }
 
-        return redirect()->route('tag.index');
+        return redirect()->route('make.index');
     }
 }

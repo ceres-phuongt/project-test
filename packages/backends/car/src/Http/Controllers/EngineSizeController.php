@@ -3,25 +3,25 @@
 namespace Backend\Car\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use Backend\Car\Http\Requests\TagRequest;
+use Backend\Car\Http\Requests\EngineSizeRequest;
 use Backend\Car\Repositories\Interfaces\EngineSizeInterface;
 
-class TagController extends Controller
+class EngineSizeController extends Controller
 {
     /**
-     * [$tagRepository description]
+     * [$engineSizeRepository description]
      * @var [type]
      */
-    protected $tagRepository;
+    protected $engineSizeRepository;
 
     /**
      * [__contruct description]
-     * @param  EngineSizeInterface  $tagRepository  [description]
+     * @param  EngineSizeInterface  $engineSizeRepository  [description]
      * @return [type]                       [description]
      */
-    public function __construct(EngineSizeInterface $tagRepository)
+    public function __construct(EngineSizeInterface $engineSizeRepository)
     {
-        $this->tagRepository = $tagRepository;
+        $this->engineSizeRepository = $engineSizeRepository;
     }
 
     /**
@@ -31,9 +31,9 @@ class TagController extends Controller
      */
     public function index()
     {
-        $tags = $this->tagRepository->paginate(10);
+        $engineSizes = $this->engineSizeRepository->paginate(10);
 
-        return view('backend/car::tag.index', compact('tags'));
+        return view('backend/car::engine-size.index', compact('engineSizes'));
     }
 
     /**
@@ -43,7 +43,7 @@ class TagController extends Controller
      */
     public function create()
     {
-        return view('backend/car::tag.create');
+        return view('backend/car::engine-size.create');
     }
 
     /**
@@ -52,16 +52,16 @@ class TagController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(TagRequest $request)
+    public function store(EngineSizeRequest $request)
     {
         $inputs = $request->only('name', 'description', 'status');
-        if ($this->tagRepository->create($inputs)) {
-            toastr()->success('Create tag success');
+        if ($this->engineSizeRepository->create($inputs)) {
+            toastr()->success('Create engine size success');
         } else {
             toastr()->error('Something went wrong!');
         }
 
-        return redirect()->route('tag.index');
+        return redirect()->route('engine-size.index');
     }
 
     /**
@@ -72,9 +72,9 @@ class TagController extends Controller
      */
     public function show($id)
     {
-        $tag = $this->tagRepository->find($id);
+        $engineSize = $this->engineSizeRepository->find($id);
 
-        return view('backend/car::tag.show', compact('tag'));
+        return view('backend/car::engine-size.show', compact('engineSize'));
     }
 
     /**
@@ -85,9 +85,9 @@ class TagController extends Controller
      */
     public function edit($id)
     {
-        $tag = $this->tagRepository->find($id);
+        $engineSize = $this->engineSizeRepository->find($id);
 
-        return view('backend/car::tag.edit', compact('tag'));
+        return view('backend/car::engine-size.edit', compact('engineSize'));
     }
 
     /**
@@ -97,17 +97,17 @@ class TagController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(TagRequest $request, $id)
+    public function update(EngineSizeRequest $request, $id)
     {
         $inputs = $request->only('name', 'description', 'status');
 
-        if ($this->tagRepository->update($id, $inputs)) {
-            toastr()->success('Update tag success');
+        if ($this->engineSizeRepository->update($id, $inputs)) {
+            toastr()->success('Update engine size success');
         } else {
             toastr()->error('Something went wrong!');
         }
 
-        return redirect()->route('tag.index');
+        return redirect()->route('engine-size.index');
     }
 
     /**
@@ -118,12 +118,12 @@ class TagController extends Controller
      */
     public function destroy($id)
     {
-        if ($deleted = $this->tagRepository->delete($id)) {
-            toastr()->success('Delete tag success');
+        if ($deleted = $this->engineSizeRepository->delete($id)) {
+            toastr()->success('Delete engine size success');
         } else {
             toastr()->error('Something went wrong!');
         }
 
-        return redirect()->route('tag.index');
+        return redirect()->route('engine-size.index');
     }
 }

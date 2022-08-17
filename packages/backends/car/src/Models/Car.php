@@ -60,6 +60,24 @@ class Car extends Model
     }
 
     /**
+     * @return BelongsTo
+     * @deprecated
+     */
+    public function engineSize(): BelongsTo
+    {
+        return $this->belongsTo(EngineSize::class, 'engine_size_id')->withDefault();
+    }
+
+    /**
+     * @return BelongsTo
+     * @deprecated
+     */
+    public function make(): BelongsTo
+    {
+        return $this->belongsTo(Make::class, 'make_id')->withDefault();
+    }
+
+    /**
      * @return BelongsToMany
      */
     public function tags(): BelongsToMany

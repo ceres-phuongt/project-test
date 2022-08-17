@@ -4,9 +4,12 @@ namespace Backend\Car\Providers;
 
 use Backend\Car\Models\Car;
 use Backend\Car\Repositories\Eloquent\CarRepository;
+use Backend\Car\Repositories\Eloquent\EngineSizeRepository;
+use Backend\Car\Repositories\Eloquent\MakeRepository;
 use Backend\Car\Repositories\Eloquent\TagRepository;
 use Backend\Car\Repositories\Interfaces\CarInterface;
-use Backend\Car\Repositories\Interfaces\TagInterface;
+use Backend\Car\Repositories\Interfaces\EngineSizeInterface;
+use Backend\Car\Repositories\Interfaces\MakeInterface;
 use Backend\Core\Repositories\Eloquent\BaseRepository;
 use Backend\Core\Repositories\Interfaces\RepositoryInterface;
 use Illuminate\Contracts\Debug\ExceptionHandler;
@@ -21,6 +24,8 @@ class CarServiceProvider extends ServiceProvider
     {
         $this->app->bind(CarInterface::class, CarRepository::class);
         $this->app->bind(TagInterface::class, TagRepository::class);
+        $this->app->bind(EngineSizeInterface::class, EngineSizeRepository::class);
+        $this->app->bind(MakeInterface::class, MakeRepository::class);
     }
 
     public function boot()

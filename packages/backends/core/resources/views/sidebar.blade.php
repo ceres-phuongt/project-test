@@ -42,9 +42,9 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="./index.html" class="nav-link">
+                            <a href="{{ route('dashboard.index') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>Dashboard v1</p>
+                                <p>Dashboard</p>
                             </a>
                         </li>
                     </ul>
@@ -68,6 +68,18 @@
                             <a href="{{ route('tag.index') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Tags</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('engine-size.index') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Engine Size</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('make.index') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Make</p>
                             </a>
                         </li>
                     </ul>

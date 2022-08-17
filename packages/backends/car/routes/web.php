@@ -12,5 +12,13 @@ Route::group(['namespace' => 'Backend\Car\Http\Controllers', 'middleware' => ['w
         Route::group(['prefix' => 'tag', 'as' => 'tag.'], function () {
             Route::resource('', 'TagController')->parameters(['' => 'tag']);
         });
+
+        Route::group(['prefix' => 'engine-size', 'as' => 'engine-size.'], function () {
+            Route::resource('', 'EngineSizeController')->parameters(['' => 'engine-size']);
+        });
+
+        Route::group(['prefix' => 'make', 'as' => 'make.'], function () {
+            Route::resource('', 'MakeController')->parameters(['' => 'make']);
+        });
     });
 });
