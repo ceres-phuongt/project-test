@@ -47,8 +47,8 @@
                         <input type="text" id="model" name="model" class="form-control" value="{{ old('model', $car->model) }}">
                     </div>
                     <div class="form-group">
-                        <label for="name">Make</label>
-                        <textarea id="make" name="make" class="form-control">{{ old('make', $car->make) }}</textarea>
+                        <label for="registration">Registration</label>
+                        <textarea id="registration" name="registration" class="form-control">{{ old('registration', $car->registration) }}</textarea>
                     </div>
                     <div class="form-group">
                         <label for="price">Price</label>
@@ -104,8 +104,13 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <select id="make_id" class="form-control custom-select" name="make_id">
+                    <select id="make_id" class="form-control custom-select" name="make_id" disabled>
                         <option selected="" disabled="">Select one</option>
+                        @if(!empty($makes) && count($makes) > 0)
+                            @foreach($makes as $make)
+                                <option value="{{ $make->id }}" @if(old('make_id', $make->id) == $make->id) selected @endif>{{ $make->name }}</option>
+                            @endforeach
+                        @endif
                     </select>
                 </div>
             </div>
@@ -122,6 +127,11 @@
                     <div class="form-group">
                         <select id="engine_size_id" class="form-control custom-select" name="engine_size_id">
                             <option selected="" disabled="">Select one</option>
+                            @if(!empty($engineSizes) && count($engineSizes) > 0)
+                                @foreach($engineSizes as $engineSize)
+                                    <option value="{{ $engineSize->id }}" @if(old('engine_size_id', $car->engine_size_id) == $engineSize->id) selected @endif>{{ $engineSize->name }}</option>
+                                @endforeach
+                            @endif
                         </select>
                     </div>
                 </div>
@@ -137,7 +147,11 @@
     </form>
     <!-- /.card -->
 </section>
-
-@section('script')
 @endsection
+@section('footer')
+    <script src="{{ asset('vendor/backends/core/plugins/inputmask/jquery.inputmask.min.js') }}"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('#price').inputmask();
+    </script>
 @endsection

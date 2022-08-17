@@ -20,7 +20,7 @@ return new class extends Migration
             $table->integer('make_id')->nullable();
             $table->integer('engine_size_id')->nullable();
             $table->text('registration')->nullable();
-            $table->decimal('amount', $precision = 15, $scale = 2)->nullable()->default(0);
+            $table->decimal('price', $precision = 15, $scale = 2)->nullable()->default(0);
             $table->string('image', 255)->nullable();
             $table->integer('user_id')->default(0);
             $table->string('status', 255)->default('pending');

@@ -46,4 +46,12 @@ interface RepositoryInterface
      * @return [type]          [description]
      */
     public function paginate($limit = null, $columns = ['*']);
+
+    /**
+     * [findWhere description]
+     * @param  array  $where   [description]
+     * @param  array  $columns [description]
+     * @return [type]          [description]
+     */
+    public function findWhere(array $where, $columns = ['*']);
 }

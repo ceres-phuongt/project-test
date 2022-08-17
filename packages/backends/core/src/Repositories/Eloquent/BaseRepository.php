@@ -81,4 +81,96 @@ abstract class BaseRepository implements RepositoryInterface
 
         return $results;
     }
+
+    /**
+     * Find data by multiple fields
+     *
+     * @param array $where
+     * @param array $columns
+     *
+     * @return mixed
+     */
+    public function findWhere(array $where, $columns = ['*'])
+    {
+        $this->applyConditions($where);
+
+        $model = $this->model->get($columns);
+
+        return $model;
+    }
+
+    /**
+     * Applies the given where conditions to the model.
+     *
+     * @param array $where
+     *
+     * @return void
+     */
+    protected function applyConditions(array $where)
+    {
+        foreach ($where as $field => $value) {
+            if (is_array($value)) {
+                list($field, $condition, $val) = $value;
+                //smooth input
+                $condition = preg_replace('/\s\s+/', ' ', trim($condition));
+
+                //split to get operator, syntax: "DATE >", "DATE =", "DAY <"
+                $operator = explode(' ', $condition);
+                if (count($operator) > 1) {
+                    $condition = $operator[0];
+                    $operator = $operator[1];
+                } else {
+                    $operator = null;
+                }
+                switch (strtoupper($condition)) {
+                    case 'IN':
+                        $this->model = $this->model->whereIn($field, $val);
+                        break;
+                    case 'NOTIN':
+                        $this->model = $this->model->whereNotIn($field, $val);
+                        break;
+                    case 'DATE':
+                        if (!$operator) {
+                            $operator = '=';
+                        }
+                        $this->model = $this->model->whereDate($field, $operator, $val);
+                        break;
+                    case 'DAY':
+                        if (!$operator) {
+                            $operator = '=';
+                        }
+                        $this->model = $this->model->whereDay($field, $operator, $val);
+                        break;
+                    case 'MONTH':
+                        if (!$operator) {
+                            $operator = '=';
+                        }
+                        $this->model = $this->model->whereMonth($field, $operator, $val);
+                        break;
+                    case 'YEAR':
+                        if (!$operator) {
+                            $operator = '=';
+                        }
+                        $this->model = $this->model->whereYear($field, $operator, $val);
+                        break;
+                    case 'EXISTS':
+                        $this->model = $this->model->whereExists($val);
+                        break;
+                    case 'HAS':
+                        $this->model = $this->model->whereHas($field, $val);
+                        break;
+                    case 'BETWEEN':
+                        if (!is_array($val)) {
+                            throw new RepositoryException("Input {$val} mus be an array");
+                        }
+                        $this->model = $this->model->whereBetween($field, $val);
+                        break;
+                    default:
+                        $this->model = $this->model->where($field, $condition, $val);
+                }
+            } else {
+                $this->model = $this->model->where($field, '=', $value);
+            }
+        }
+    }
 }

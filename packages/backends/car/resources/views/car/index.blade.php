@@ -53,9 +53,6 @@
                             Engine Size
                         </th>
                         <th>
-                            Registration
-                        </th>
-                        <th>
                             Price
                         </th>
                         <th style="width: 8%" class="text-center">
@@ -84,16 +81,13 @@
                                 </small>
                             </td>
                             <td>
-                                {{ $item->make }}
+                                {{ $item->make ? $item->make->name  : '' }}
                             </td>
                             <td>
                                 {{ $item->model }}
                             </td>
                             <td>
-                                {{ $item->engine_size }}
-                            </td>
-                            <td>
-                                {{ $item->registration }}
+                                {{ $item->engineSize ? $item->engineSize->name : '' }}
                             </td>
                             <td>
                                 {{ $item->price }}

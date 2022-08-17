@@ -25,14 +25,14 @@ class CarRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            'name'         => 'required|max:255|unique:cars,name',
-            'model'        => 'nullable|string|max:255',
-            'make'         => 'nullable|string|max:255',
-            'engine_size'  => 'nullable|string|max:255',
-            'registration' => 'nullable|string|max:255',
-            'price'        => 'nullable|numeric',
-            'image'        => 'nullable|string|max:255',
-            'status'       => Rule::in(['published', 'draft', 'pending']),
+            'name'           => 'required|max:255|unique:cars,name',
+            'model'          => 'nullable|string|max:255',
+            'make_id'        => 'nullable|exists:makes,id',
+            'engine_size_id' => 'nullable|exists:engine_sizes,id',
+            'registration'   => 'nullable|string|max:2048',
+            'price'          => 'nullable|numeric',
+            'image'          => 'nullable|string|max:255',
+            'status'         => Rule::in(['published', 'draft', 'pending']),
         ];
 
         $input = Request::only('id');

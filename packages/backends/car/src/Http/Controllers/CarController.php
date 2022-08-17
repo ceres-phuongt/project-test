@@ -5,6 +5,8 @@ namespace Backend\Car\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Backend\Car\Http\Requests\CarRequest;
 use Backend\Car\Repositories\Interfaces\CarInterface;
+use Backend\Car\Repositories\Interfaces\EngineSizeInterface;
+use Backend\Car\Repositories\Interfaces\MakeInterface;
 
 class CarController extends Controller
 {
@@ -14,13 +16,26 @@ class CarController extends Controller
      */
     protected $carRepository;
     /**
-     * [__contruct description]
-     * @param  CarInterface $carRepository [description]
-     * @return [type]                       [description]
+     * [$makeRepository description]
+     * @var [type]
      */
-    public function __construct(CarInterface $carRepository)
+    protected $makeRepository;
+    /**
+     * [$engineSizeRepository description]
+     * @var [type]
+     */
+    protected $engineSizeRepository;
+    /**
+     * [__construct description]
+     * @param CarInterface        $carRepository        [description]
+     * @param EngineSizeInterface $engineSizeRepository [description]
+     * @param MakeInterface       $makeRepository       [description]
+     */
+    public function __construct(CarInterface $carRepository, EngineSizeInterface $engineSizeRepository, MakeInterface $makeRepository)
     {
         $this->carRepository = $carRepository;
+        $this->engineSizeRepository = $engineSizeRepository;
+        $this->makeRepository = $makeRepository;
     }
     /**
      * Display a listing of the resource.
@@ -41,7 +56,10 @@ class CarController extends Controller
      */
     public function create()
     {
-        return view('backend/car::car.create');
+        $makes = $this->makeRepository->findWhere(['status' => 'published']);
+        $engineSizes = $this->engineSizeRepository->findWhere(['status' => 'published']);
+
+        return view('backend/car::car.create', compact('makes', 'engineSizes'));
     }
 
     /**
@@ -52,7 +70,7 @@ class CarController extends Controller
      */
     public function store(CarRequest $request)
     {
-        $inputs = $request->only('name', 'make', 'model', 'engin_size', 'registration', 'price', 'status');
+        $inputs = $request->only('name', 'make_id', 'model', 'engine_size_id', 'registration', 'price', 'status');
         if ($this->carRepository->create($inputs)) {
             toastr()->success('Create car success');
         } else {
@@ -71,8 +89,10 @@ class CarController extends Controller
     public function show($id)
     {
         $car = $this->carRepository->find($id);
+        $makes = $this->makeRepository->findWhere(['status' => 'published']);
+        $engineSizes = $this->engineSizeRepository->findWhere(['status' => 'published']);
 
-        return view('backend/car::car.show', compact('car'));
+        return view('backend/car::car.show', compact('car', 'makes', 'engineSizes'));
     }
 
     /**
@@ -84,8 +104,10 @@ class CarController extends Controller
     public function edit($id)
     {
         $car = $this->carRepository->find($id);
+        $makes = $this->makeRepository->findWhere(['status' => 'published']);
+        $engineSizes = $this->engineSizeRepository->findWhere(['status' => 'published']);
 
-        return view('backend/car::car.edit', compact('car'));
+        return view('backend/car::car.edit', compact('car', 'makes', 'engineSizes'));
     }
 
     /**
@@ -97,7 +119,7 @@ class CarController extends Controller
      */
     public function update(CarRequest $request, $id)
     {
-        $inputs = $request->only('name', 'make', 'model', 'engin_size', 'registration', 'price', 'status');
+        $inputs = $request->only('name', 'make_id', 'model', 'engine_size_id', 'registration', 'price', 'status');
 
         if ($this->carRepository->update($id, $inputs)) {
             toastr()->success('Update car success');
