@@ -24,6 +24,22 @@ abstract class BaseRepository implements RepositoryInterface
         );
     }
 
+    public function make(array $with = [])
+    {
+        if (!empty($with)) {
+            $this->model = $this->model->with($with);
+        }
+
+        return $this->model;
+    }
+
+    public function resetModel()
+    {
+        $model = app()->make($this->getModel());
+
+        return $this->model = $model;
+    }
+
     public function getAll()
     {
         return $this->model->all();
@@ -38,15 +54,20 @@ abstract class BaseRepository implements RepositoryInterface
 
     public function create($attributes = [])
     {
-        return $this->model->create($attributes);
+        $result = $this->model->create($attributes);
+        $this->resetModel();
+
+        return $result;
     }
 
     public function update($id, $attributes = [])
     {
         $result = $this->find($id);
         if ($result) {
-            $result->update($attributes);
-            return $result;
+            $data = $result->update($attributes);
+            $this->resetModel();
+
+            return $data;
         }
 
         return false;
@@ -57,6 +78,7 @@ abstract class BaseRepository implements RepositoryInterface
         $result = $this->find($id);
         if ($result) {
             $result->delete();
+            $this->resetModel();
 
             return true;
         }
@@ -110,60 +132,13 @@ abstract class BaseRepository implements RepositoryInterface
     {
         foreach ($where as $field => $value) {
             if (is_array($value)) {
-                list($field, $condition, $val) = $value;
-                //smooth input
-                $condition = preg_replace('/\s\s+/', ' ', trim($condition));
-
-                //split to get operator, syntax: "DATE >", "DATE =", "DAY <"
-                $operator = explode(' ', $condition);
-                if (count($operator) > 1) {
-                    $condition = $operator[0];
-                    $operator = $operator[1];
-                } else {
-                    $operator = null;
-                }
+                [$field, $condition, $val] = $value;
                 switch (strtoupper($condition)) {
                     case 'IN':
                         $this->model = $this->model->whereIn($field, $val);
                         break;
                     case 'NOTIN':
                         $this->model = $this->model->whereNotIn($field, $val);
-                        break;
-                    case 'DATE':
-                        if (!$operator) {
-                            $operator = '=';
-                        }
-                        $this->model = $this->model->whereDate($field, $operator, $val);
-                        break;
-                    case 'DAY':
-                        if (!$operator) {
-                            $operator = '=';
-                        }
-                        $this->model = $this->model->whereDay($field, $operator, $val);
-                        break;
-                    case 'MONTH':
-                        if (!$operator) {
-                            $operator = '=';
-                        }
-                        $this->model = $this->model->whereMonth($field, $operator, $val);
-                        break;
-                    case 'YEAR':
-                        if (!$operator) {
-                            $operator = '=';
-                        }
-                        $this->model = $this->model->whereYear($field, $operator, $val);
-                        break;
-                    case 'EXISTS':
-                        $this->model = $this->model->whereExists($val);
-                        break;
-                    case 'HAS':
-                        $this->model = $this->model->whereHas($field, $val);
-                        break;
-                    case 'BETWEEN':
-                        if (!is_array($val)) {
-                            throw new RepositoryException("Input {$val} mus be an array");
-                        }
-                        $this->model = $this->model->whereBetween($field, $val);
                         break;
                     default:
                         $this->model = $this->model->where($field, $condition, $val);
@@ -204,9 +179,10 @@ abstract class BaseRepository implements RepositoryInterface
      */
     public function updateOrCreate(array $attributes, array $values = [])
     {
-        $model = $this->model->updateOrCreate($attributes, $values);
+        $result = $this->model->updateOrCreate($attributes, $values);
+        $this->resetModel();
 
-        return $model;
+        return $result;
     }
 
     public function pluck($column, $key = null, array $condition = [])

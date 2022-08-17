@@ -4,6 +4,7 @@ namespace Backend\Core\Repositories\Interfaces;
 
 interface RepositoryInterface
 {
+    public function make(array $with = []);
     /**
      * Get all
      * @return mixed
