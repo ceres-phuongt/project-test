@@ -1,6 +1,7 @@
 @extends('backend/core::backend')
 @section('header')
     <title>{{ __('Create Car') }}</title>
+    <link href="{{ asset('vendor/backends/core/plugins/tagify/dist/tagify.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 @section('breadscrumb')
     <div class="content-header">
@@ -133,6 +134,16 @@
                     </div>
                 </div>
             </div>
+            <div class="card card-secondary">
+                <div class="card-header">
+                    <h3 class="card-title">Tags</h3>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <input class="tags form-control" placeholder="Write some tags" data-url="{{ route('tag.all') }}" name="tag" type="text" id="tag" value="{{ old('tag') }}">
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <div class="row">
@@ -146,4 +157,37 @@
 </section>
 @endsection
 @section('footer')
+    <script src="{{ asset('vendor/backends/core/plugins/tagify/dist/tagify.js') }}"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            $(document).find('.tags').each(function (index, element) {
+
+                let tagify = new Tagify(element, {
+                    keepInvalidTags: $(element).data('keep-invalid-tags') !== undefined ? $(element).data('keep-invalid-tags') : true,
+                    enforceWhitelist: $(element).data('enforce-whitelist') !== undefined ? $(element).data('enforce-whitelist') : false,
+                    delimiters: $(element).data('delimiters') !== undefined ? $(element).data('delimiters') : ',',
+                    whitelist: element.value.trim().split(/\s*,\s*/),
+                });
+
+                if ($(element).data('url')) {
+                    tagify.on('input', e => {
+                        tagify.settings.whitelist.length = 0; // reset current whitelist
+                        tagify.loading(true).dropdown.hide.call(tagify) // show the loader animation
+
+                        $.ajax({
+                            type: 'GET',
+                            url: $(element).data('url'),
+                            success: data => {
+                                tagify.settings.whitelist = data;
+
+                                // render the suggestions dropdown.
+                                tagify.loading(false).dropdown.show.call(tagify, e.detail.value);
+                            },
+                        });
+                    });
+                };
+            });
+        });
+    </script>
 @endsection

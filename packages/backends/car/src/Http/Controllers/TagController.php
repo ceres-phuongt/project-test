@@ -4,7 +4,7 @@ namespace Backend\Car\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Backend\Car\Http\Requests\TagRequest;
-use Backend\Car\Repositories\Interfaces\EngineSizeInterface;
+use Backend\Car\Repositories\Interfaces\TagInterface;
 
 class TagController extends Controller
 {
@@ -16,10 +16,10 @@ class TagController extends Controller
 
     /**
      * [__contruct description]
-     * @param  EngineSizeInterface  $tagRepository  [description]
+     * @param  TagInterface  $tagRepository  [description]
      * @return [type]                       [description]
      */
-    public function __construct(EngineSizeInterface $tagRepository)
+    public function __construct(TagInterface $tagRepository)
     {
         $this->tagRepository = $tagRepository;
     }
@@ -125,5 +125,17 @@ class TagController extends Controller
         }
 
         return redirect()->route('tag.index');
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getAllTags()
+    {
+        $tags = $this->tagRepository->pluck('name', null, ['status' => 'published']);
+
+        return $tags;
     }
 }

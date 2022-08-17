@@ -7,6 +7,7 @@ use Backend\Car\Http\Requests\CarRequest;
 use Backend\Car\Repositories\Interfaces\CarInterface;
 use Backend\Car\Repositories\Interfaces\EngineSizeInterface;
 use Backend\Car\Repositories\Interfaces\MakeInterface;
+use Backend\Car\Services\StoreTagService;
 
 class CarController extends Controller
 {
@@ -68,10 +69,12 @@ class CarController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CarRequest $request)
+    public function store(CarRequest $request, StoreTagService $tagService)
     {
         $inputs = $request->only('name', 'make_id', 'model', 'engine_size_id', 'registration', 'price', 'status');
-        if ($this->carRepository->create($inputs)) {
+        $car = $this->carRepository->create($inputs);
+        if ($car) {
+            $tagService->execute($request, $car);
             toastr()->success('Create car success');
         } else {
             toastr()->error('Something went wrong!');
@@ -117,11 +120,12 @@ class CarController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(CarRequest $request, $id)
+    public function update(CarRequest $request, $id, StoreTagService $tagService)
     {
         $inputs = $request->only('name', 'make_id', 'model', 'engine_size_id', 'registration', 'price', 'status');
-
-        if ($this->carRepository->update($id, $inputs)) {
+        $car = $this->carRepository->update($id, $inputs);
+        if ($car) {
+            $tagService->execute($request, $car);
             toastr()->success('Update car success');
         } else {
             toastr()->error('Something went wrong!');

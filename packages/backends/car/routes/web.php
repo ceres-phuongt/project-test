@@ -10,6 +10,7 @@ Route::group(['namespace' => 'Backend\Car\Http\Controllers', 'middleware' => ['w
         });
 
         Route::group(['prefix' => 'tag', 'as' => 'tag.'], function () {
+            Route::get('all', ['as' => 'all', 'uses' => 'TagController@getAllTags']);
             Route::resource('', 'TagController')->parameters(['' => 'tag']);
         });
 

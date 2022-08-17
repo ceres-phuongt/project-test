@@ -276,3 +276,6 @@
         <!--/. container-fluid -->
     </section>
 @endsection
+@section('footer')
+    <script src="{{ asset('vendor/backends/core/dist/js/pages/dashboard2.js') }}"></script>
+@endsection

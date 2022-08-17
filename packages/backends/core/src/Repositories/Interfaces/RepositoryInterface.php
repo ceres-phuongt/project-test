@@ -42,16 +42,35 @@ interface RepositoryInterface
     /**
      * [paginate description]
      * @param  [type] $limit   [description]
-     * @param  array  $columns [description]
+     * @param  array  $select [description]
      * @return [type]          [description]
      */
-    public function paginate($limit = null, $columns = ['*']);
+    public function paginate($limit = null, $select = ['*']);
 
     /**
      * [findWhere description]
      * @param  array  $where   [description]
-     * @param  array  $columns [description]
+     * @param  array  $select [description]
      * @return [type]          [description]
      */
-    public function findWhere(array $where, $columns = ['*']);
+    public function findWhere(array $attributes, $select = ['*']);
+
+    /**
+     * [getFirstBy description]
+     * @param  array  $column  [description]
+     * @param  array  $where   [description]
+     * @param  array  $select [description]
+     * @return [type]          [description]
+     */
+    public function getFirstBy(array $condition = [], array $select = ['*']);
+
+    /**
+     * [updateOrCreate description]
+     * @param  array  $attributes [description]
+     * @param  array  $values     [description]
+     * @return [type]             [description]
+     */
+    public function updateOrCreate(array $attributes, array $values = []);
+
+    public function pluck($column, $key = null, array $condition = []);
 }

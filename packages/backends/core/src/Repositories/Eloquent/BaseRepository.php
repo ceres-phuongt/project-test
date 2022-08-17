@@ -68,15 +68,15 @@ abstract class BaseRepository implements RepositoryInterface
      * Retrieve all data of repository, paginated
      *
      * @param null|int $limit
-     * @param array    $columns
+     * @param array    $select
      * @param string   $method
      *
      * @return mixed
      */
-    public function paginate($limit = null, $columns = ['*'], $column = 'id', $order = 'desc')
+    public function paginate($limit = null, $select = ['*'], $column = 'id', $order = 'desc')
     {
         $limit = is_null($limit) ? 10 : $limit;
-        $results = $this->model->orderBy($column, $order)->paginate($limit, $columns);
+        $results = $this->model->orderBy($column, $order)->paginate($limit, $select);
         $results->appends(app('request')->query());
 
         return $results;
@@ -86,15 +86,15 @@ abstract class BaseRepository implements RepositoryInterface
      * Find data by multiple fields
      *
      * @param array $where
-     * @param array $columns
+     * @param array $select
      *
      * @return mixed
      */
-    public function findWhere(array $where, $columns = ['*'])
+    public function findWhere(array $where, $select = ['*'])
     {
         $this->applyConditions($where);
 
-        $model = $this->model->get($columns);
+        $model = $this->model->get($select);
 
         return $model;
     }
@@ -172,5 +172,54 @@ abstract class BaseRepository implements RepositoryInterface
                 $this->model = $this->model->where($field, '=', $value);
             }
         }
+    }
+    /**
+     * [getFirstBy description]
+     * @param  array  $attributes  [description]
+     * @param  array  $where   [description]
+     * @param  array  $select [description]
+     * @return [type]          [description]
+     */
+    public function getFirstBy(array $condition = [], array $select = ['*'])
+    {
+        $this->applyConditions($condition);
+        if (!empty($select)) {
+            $model = $this->model->select($select);
+        } else {
+            $model = $this->model->select('*');
+        }
+
+        return $model->first();
+    }
+
+    /**
+     * Update or Create an entity in repository
+     *
+     * @param array $attributes
+     * @param array $values
+     *
+     * @return mixed
+     * @throws ValidatorException
+     *
+     */
+    public function updateOrCreate(array $attributes, array $values = [])
+    {
+        $model = $this->model->updateOrCreate($attributes, $values);
+
+        return $model;
+    }
+
+    public function pluck($column, $key = null, array $condition = [])
+    {
+        $this->applyConditions($condition);
+
+        $select = [$column];
+        if (!empty($key)) {
+            $select = [$column, $key];
+        }
+
+        $data = $this->model->select($select);
+
+        return $data->pluck($column, $key)->all();
     }
 }

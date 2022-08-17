@@ -10,6 +10,7 @@ use Backend\Car\Repositories\Eloquent\TagRepository;
 use Backend\Car\Repositories\Interfaces\CarInterface;
 use Backend\Car\Repositories\Interfaces\EngineSizeInterface;
 use Backend\Car\Repositories\Interfaces\MakeInterface;
+use Backend\Car\Repositories\Interfaces\TagInterface;
 use Backend\Core\Repositories\Eloquent\BaseRepository;
 use Backend\Core\Repositories\Interfaces\RepositoryInterface;
 use Illuminate\Contracts\Debug\ExceptionHandler;
