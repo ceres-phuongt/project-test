@@ -63,4 +63,22 @@ abstract class BaseRepository implements RepositoryInterface
 
         return false;
     }
+
+    /**
+     * Retrieve all data of repository, paginated
+     *
+     * @param null|int $limit
+     * @param array    $columns
+     * @param string   $method
+     *
+     * @return mixed
+     */
+    public function paginate($limit = null, $columns = ['*'], $column = 'id', $order = 'desc')
+    {
+        $limit = is_null($limit) ? 10 : $limit;
+        $results = $this->model->orderBy($column, $order)->paginate($limit, $columns);
+        $results->appends(app('request')->query());
+
+        return $results;
+    }
 }

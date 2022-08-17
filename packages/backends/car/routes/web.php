@@ -7,11 +7,10 @@ Route::group(['namespace' => 'Backend\Car\Http\Controllers', 'middleware' => ['w
     Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
         Route::group(['prefix' => 'car', 'as' => 'car.'], function () {
             Route::resource('', 'CarController')->parameters(['' => 'car']);
+        });
 
-            Route::delete('items/destroy', [
-            'as'         => 'deletes',
-            'uses'       => 'CarController@deletes'
-            ]);
+        Route::group(['prefix' => 'tag', 'as' => 'tag.'], function () {
+            Route::resource('', 'TagController')->parameters(['' => 'tag']);
         });
     });
 });

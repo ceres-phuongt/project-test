@@ -3,25 +3,27 @@
 namespace Backend\Car\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use Backend\Car\Http\Requests\CarRequest;
-use Backend\Car\Repositories\Interfaces\CarInterface;
+use Backend\Car\Http\Requests\TagRequest;
+use Backend\Car\Repositories\Interfaces\TagInterface;
 
-class CarController extends Controller
+class TagController extends Controller
 {
     /**
-     * [$carRepository description]
+     * [$tagRepository description]
      * @var [type]
      */
-    protected $carRepository;
+    protected $tagRepository;
+
     /**
      * [__contruct description]
-     * @param  CarInterface $carRepository [description]
+     * @param  TagInterface  $tagRepository  [description]
      * @return [type]                       [description]
      */
-    public function __construct(CarInterface $carRepository)
+    public function __construct(TagInterface $tagRepository)
     {
-        $this->carRepository = $carRepository;
+        $this->tagRepository = $tagRepository;
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -29,9 +31,9 @@ class CarController extends Controller
      */
     public function index()
     {
-        $cars = $this->carRepository->paginate(10);
+        $tags = $this->tagRepository->paginate(10);
 
-        return view('backend/car::car.index', compact('cars'));
+        return view('backend/car::tag.index', compact('tags'));
     }
 
     /**
@@ -41,7 +43,7 @@ class CarController extends Controller
      */
     public function create()
     {
-        return view('backend/car::car.create');
+        return view('backend/car::tag.create');
     }
 
     /**
@@ -50,16 +52,16 @@ class CarController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CarRequest $request)
+    public function store(TagRequest $request)
     {
-        $inputs = $request->only('name', 'make', 'model', 'engin_size', 'registration', 'price', 'status');
-        if ($this->carRepository->create($inputs)) {
-            toastr()->success('Create car success');
+        $inputs = $request->only('name', 'description', 'status');
+        if ($this->tagRepository->create($inputs)) {
+            toastr()->success('Create tag success');
         } else {
             toastr()->error('Something went wrong!');
         }
 
-        return redirect()->route('car.index');
+        return redirect()->route('tag.index');
     }
 
     /**
@@ -70,9 +72,9 @@ class CarController extends Controller
      */
     public function show($id)
     {
-        $car = $this->carRepository->find($id);
+        $tag = $this->tagRepository->find($id);
 
-        return view('backend/car::car.show', compact('car'));
+        return view('backend/car::tag.show', compact('tag'));
     }
 
     /**
@@ -83,9 +85,9 @@ class CarController extends Controller
      */
     public function edit($id)
     {
-        $car = $this->carRepository->find($id);
+        $tag = $this->tagRepository->find($id);
 
-        return view('backend/car::car.edit', compact('car'));
+        return view('backend/car::tag.edit', compact('tag'));
     }
 
     /**
@@ -95,17 +97,17 @@ class CarController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(CarRequest $request, $id)
+    public function update(TagRequest $request, $id)
     {
-        $inputs = $request->only('name', 'make', 'model', 'engin_size', 'registration', 'price', 'status');
+        $inputs = $request->only('name', 'description', 'status');
 
-        if ($this->carRepository->update($id, $inputs)) {
-            toastr()->success('Update car success');
+        if ($this->tagRepository->update($id, $inputs)) {
+            toastr()->success('Update tag success');
         } else {
             toastr()->error('Something went wrong!');
         }
 
-        return redirect()->route('car.index');
+        return redirect()->route('tag.index');
     }
 
     /**
@@ -116,12 +118,12 @@ class CarController extends Controller
      */
     public function destroy($id)
     {
-        if ($deleted = $this->carRepository->delete($id)) {
-            toastr()->success('Delete car success');
+        if ($deleted = $this->tagRepository->delete($id)) {
+            toastr()->success('Delete tag success');
         } else {
             toastr()->error('Something went wrong!');
         }
 
-        return redirect()->route('car.index');
+        return redirect()->route('tag.index');
     }
 }

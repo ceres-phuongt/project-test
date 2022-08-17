@@ -38,4 +38,12 @@ interface RepositoryInterface
      * @return mixed
      */
     public function delete($id);
+
+    /**
+     * [paginate description]
+     * @param  [type] $limit   [description]
+     * @param  array  $columns [description]
+     * @return [type]          [description]
+     */
+    public function paginate($limit = null, $columns = ['*']);
 }

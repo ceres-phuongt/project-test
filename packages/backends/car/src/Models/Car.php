@@ -5,8 +5,6 @@ use Illuminate\Database\Eloquent\Model;
 use Backend\User\Models\User;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\MorphTo;
-use Illuminate\Support\Str;
 
 class Car extends Model
 {
@@ -64,17 +62,17 @@ class Car extends Model
     /**
      * @return BelongsToMany
      */
-//    public function tags(): BelongsToMany
-//    {
-//        return $this->belongsToMany(Tag::class, 'car_tags');
-//    }
+    public function tags(): BelongsToMany
+    {
+        return $this->belongsToMany(Tag::class, 'car_tags');
+    }
 
     protected static function boot()
     {
         parent::boot();
 
-//        static::deleting(function (Car $car) {
-//            $car->tags()->detach();
-//        });
+        static::deleting(function (Car $car) {
+            $car->tags()->detach();
+        });
     }
 }
