@@ -25,7 +25,7 @@
     <form action="{{ route('car.store') }}" method="post">
     {!! csrf_field() !!}
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-9">
             <div class="card card-primary">
                 <div class="card-header">
                     <h3 class="card-title">Car</h3>
@@ -45,29 +45,12 @@
                         <input type="text" id="model" name="model" class="form-control" value="{{ old('model') }}">
                     </div>
                     <div class="form-group">
-                        <label for="name">Make</label>
-                        <input type="text" id="make" name="make" class="form-control" value="{{ old('make') }}">
-                    </div>
-                    <div class="form-group">
-                        <label for="engine_size">Engine size</label>
-                        <input type="text" id="engine_size" name="engine_size" class="form-control" value="{{ old('engine_size') }}">
-                    </div>
-                    <div class="form-group">
                         <label for="registration">Registration</label>
-                        <input type="text" id="registration" name="registration" class="form-control" value="{{ old('registration') }}">
+                        <textarea id="registration" name="registration" class="form-control">{{ old('registration') }}</textarea>
                     </div>
                     <div class="form-group">
                         <label for="price">Price</label>
                         <input type="text" id="price" name="price" class="form-control" value="{{ old('price') }}">
-                    </div>
-                    <div class="form-group">
-                        <label for="inputStatus">Status</label>
-                        <select id="status" class="form-control custom-select" name="status">
-                            <option disabled>Select one</option>
-                            <option value="published" @if(old('status') == 'published') selected @endif>Published</option>
-                            <option value="pending" @if(old('status') == 'pending') selected @endif>Pending</option>
-                            <option value="draft" @if(old('status') == 'draft') selected @endif>Draft</option>
-                        </select>
                     </div>
                 </div>
                 <!-- /.card-body -->
@@ -88,6 +71,58 @@
                     </div>
                 </div>
             @endif
+        </div>
+        <div class="col-md-3">
+            <div class="card card-secondary">
+                <div class="card-header">
+                    <h3 class="card-title">Status</h3>
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <select id="status" class="form-control custom-select" name="status">
+                        <option disabled>Select one</option>
+                        <option value="published" @if(old('status') == 'published') selected @endif>Published</option>
+                        <option value="pending" @if(old('status') == 'pending') selected @endif>Pending</option>
+                        <option value="draft" @if(old('status') == 'draft') selected @endif>Draft</option>
+                    </select>
+                </div>
+            </div>
+            <div class="card card-secondary">
+                <div class="card-header">
+                    <h3 class="card-title">Make</h3>
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <select id="make_id" class="form-control custom-select" name="make_id">
+                        <option selected="" disabled="">Select one</option>
+                    </select>
+                </div>
+            </div>
+            <div class="card card-secondary">
+                <div class="card-header">
+                    <h3 class="card-title">Engine Size</h3>
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <select id="engine_size_id" class="form-control custom-select" name="engine_size_id">
+                            <option selected="" disabled="">Select one</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <div class="row">

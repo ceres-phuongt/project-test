@@ -23,7 +23,7 @@
 <section class="content">
     <!-- Default box -->
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-9">
             <div class="card card-primary">
                 <div class="card-header">
                     <h3 class="card-title">Car</h3>
@@ -44,23 +44,31 @@
                         <input type="text" id="model" name="model" class="form-control" value="{{ $car->model }}" disabled>
                     </div>
                     <div class="form-group">
-                        <label for="name">Make</label>
-                        <input type="text" id="make" name="make" class="form-control" value="{{ $car->make }}" disabled>
-                    </div>
-                    <div class="form-group">
-                        <label for="engine_size">Engine size</label>
-                        <input type="text" id="engine_size" name="engine_size" class="form-control" value="{{ $car->engine_size }}" disabled>
-                    </div>
-                    <div class="form-group">
                         <label for="registration">Registration</label>
-                        <input type="text" id="registration" name="registration" class="form-control" value="{{ $car->registration }}" disabled>
+                        <textarea type="text" id="registration" name="registration" class="form-control"  disabled>{{ $car->registration }}</textarea>
                     </div>
                     <div class="form-group">
                         <label for="price">Price</label>
                         <input type="text" id="price" name="price" class="form-control" value="{{ $car->price }}" disabled>
                     </div>
+                </div>
+                <!-- /.card-body -->
+
+            </div>
+            <!-- /.card -->
+        </div>
+        <div class="col-md-3">
+            <div class="card card-secondary">
+                <div class="card-header">
+                    <h3 class="card-title">Status</h3>
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
                     <div class="form-group">
-                        <label for="inputStatus">Status</label>
                         <select id="inputStatus" class="form-control custom-select" disabled>
                             @switch($car->status)
                                 @case('published')
@@ -77,10 +85,39 @@
                         </select>
                     </div>
                 </div>
-                <!-- /.card-body -->
-
             </div>
-            <!-- /.card -->
+            <div class="card card-secondary">
+                <div class="card-header">
+                    <h3 class="card-title">Make</h3>
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <select id="make_id" class="form-control custom-select" name="make_id">
+                        <option selected="" disabled="">Select one</option>
+                    </select>
+                </div>
+            </div>
+            <div class="card card-secondary">
+                <div class="card-header">
+                    <h3 class="card-title">Engine Size</h3>
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <select id="engine_size_id" class="form-control custom-select" name="engine_size_id">
+                            <option selected="" disabled="">Select one</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <div class="row">
