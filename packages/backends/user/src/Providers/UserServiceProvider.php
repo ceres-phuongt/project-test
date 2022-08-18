@@ -22,7 +22,6 @@ class UserServiceProvider extends ServiceProvider
 {
     public function register()
     {
-        $this->app->singleton(ExceptionHandler::class, CustomHandlerException::class);
     }
 
     // packages/core/src/Providers/CoreServiceProvider.php
@@ -53,10 +52,5 @@ class UserServiceProvider extends ServiceProvider
         $this->app->booted(function () {
             config()->set(['auth.providers.users.model' => User::class]);
         });
-    }
-
-    public function provides()
-    {
-        return ['core'];
     }
 }

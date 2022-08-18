@@ -7,7 +7,7 @@ Route::group(['namespace' => 'Backend\User\Http\Controllers', 'middleware' => ['
     Route::group(['prefix' => 'auth', 'as' => 'auth.'], function () {
         Route::get('login', ['as' => 'create', 'uses' => 'Auth\LoginController@create']);
         Route::post('login', ['as' => 'store', 'uses' => 'Auth\LoginController@store']);
-        Route::get('logout', ['as' => 'logout', 'uses' => 'Auth\LoginController@logOut']);
+        Route::get('logout', ['as' => 'logout', 'uses' => 'Auth\LoginController@logOut'])->middleware('auth');
     });
 
     Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {

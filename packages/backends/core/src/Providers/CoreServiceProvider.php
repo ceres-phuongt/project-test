@@ -15,11 +15,6 @@ use Illuminate\Support\ServiceProvider;
 
 class CoreServiceProvider extends ServiceProvider
 {
-    // public function register()
-    // {
-    //     $this->app->bind(RepositoryInterface::class, BaseRepository::class);
-    // }
-
     public function boot()
     {
         // NOTE: Load views, the same as load routes
