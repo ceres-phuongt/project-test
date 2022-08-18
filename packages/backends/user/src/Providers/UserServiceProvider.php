@@ -2,21 +2,16 @@
 
 namespace Backend\User\Providers;
 
-use App\Http\Middleware\VerifyCsrfToken;
 use Backend\User\Http\Middleware\Authenticate;
+use Backend\User\Http\Middleware\CheckAdminLogin;
 use Backend\User\Http\Middleware\RedirectIfAuthenticated;
 use Backend\User\Models\User;
-use Illuminate\Contracts\Debug\ExceptionHandler;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Routing\Events\RouteMatched;
 use Illuminate\Routing\Middleware\ValidateSignature;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
-use Backend\User\Commands\DemoCommand;
-use Backend\User\Exceptions\CustomHandlerException;
-use Backend\User\Facades\CoreFacadeLoadedDirectlyFacade;
-use Backend\User\Http\Middleware\CustomVerifyCsrfTokenMiddleware;
 
 class UserServiceProvider extends ServiceProvider
 {
@@ -47,6 +42,7 @@ class UserServiceProvider extends ServiceProvider
 
             $router->aliasMiddleware('auth', Authenticate::class);
             $router->aliasMiddleware('guest', RedirectIfAuthenticated::class);
+            $router->aliasMiddleware('checkAdminLogin', CheckAdminLogin::class);
         });
 
         $this->app->booted(function () {
