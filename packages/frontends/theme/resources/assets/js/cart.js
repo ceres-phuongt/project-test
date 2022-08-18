@@ -27,31 +27,31 @@
                 },
             });
         });
-        $('#cart-content .cart-item .btn-plus').on('click', function (e) {
-            e.preventDefault();
-            var incrementValue = $(this).parents('.cart-item').find('.quantity-input').val();
-            var value = parseInt(incrementValue, 10);
-
-            value = isNaN(value) ? 0 : value;
-            value++;
-            $(this).parents('.cart-item').find('.quantity-input').val(value);
-        });
-
-        $('#cart-content .cart-item .btn-minus').on('click', function (e) {
-            e.preventDefault();
-            var decrementValue = $(this).parents('.cart-item').find('.quantity-input').val();
-            var value = parseInt(decrementValue, 10);
-            value = isNaN(value) ? 0 : value;
-            if(value > 1){
-                value--;
-                $(this).parents('.cart-item').find('.quantity-input').val(value);
-            }
-        });
 
         $('#cart-content .cart-item .quantity-input').on('change', function(e) {
             e.preventDefault();
 
-            updateCart();
+            var quantity = $(this).closest(".cart-item").find('.quantity-input').val();
+            var carId = $(this).closest(".cart-item").find('.car-id').val();
+
+            var data = {
+                'quantity':quantity,
+                'carId':carId,
+            };
+
+            updateCart(data);
+        });
+
+        $('#cart-content .cart-item .btn-remove').on('click', function(e) {
+            e.preventDefault();
+
+            var carId = $(this).closest(".cart-item").find('.car-id').val();
+
+            var data = {
+                'carId':carId,
+            };
+
+            removeFromCart(data);
         });
     });
 
@@ -75,7 +75,7 @@
         });
     }
 
-    function updateCart()
+    function updateCart(data)
     {
         $.ajaxSetup({
             headers: {
@@ -83,22 +83,36 @@
             }
         });
 
-        var quantity = $(this).closest(".cart-item").find('.quantity').val();
-        var carId = $(this).closest(".cart-item").find('.car-id').val();
-
-        var data = {
-            'quantity':quantity,
-            'carId':carId,
-        };
-
         $.ajax({
             url: '/updateCart',
             type: 'POST',
             data: data,
             success: function (response) {
-                let value = jQuery.parseJSON(response);
-                let html = value['html'];
+                // let html = response.html;
+                // $('#cart-content').html(html);
+                // toastr.success('Update cart success', 'Message', { timeOut: 3000, progressBar: true, positionClass: "toast-bottom-right" });
+                window.location.reload();
+            }
+        });
+    }
+
+    function removeFromCart(data)
+    {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $.ajax({
+            url: '/removeFromCart',
+            type: 'POST',
+            data: data,
+            success: function (response) {
+                let html = response.html;
                 $('#cart-content').html(html);
+                toastr.success('Remove item from cart success', 'Message', { timeOut: 3000, progressBar: true, positionClass: "toast-bottom-right" });
+                // window.location.reload();
             }
         });
     }

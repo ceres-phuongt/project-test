@@ -10,5 +10,6 @@ Route::group(['namespace' => 'Frontend\Theme\Http\Controllers', 'middleware' => 
         Route::get('loadAjaxCart', ['as' => 'loadAjaxCart', 'uses' => 'CartController@loadAjaxCart']);
         Route::post('addToCart', ['as' => 'addToCart', 'uses' => 'CartController@addToCart']);
         Route::post('updateCart', ['as' => 'updateCart', 'uses' => 'CartController@updateCart']);
+        Route::post('removeFromCart', ['as' => 'removeFromCart', 'uses' => 'CartController@removeFromCart']);
     });
 });

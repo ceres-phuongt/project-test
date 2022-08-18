@@ -23,7 +23,7 @@ class ThemeController extends Controller
      */
     public function index()
     {
-        $listCar = $this->carRepository->getListCarHomepage(['status' => 'published'], 1);
+        $listCar = $this->carRepository->getListCarHomepage(['status' => 'published'], 10);
 
         return view('frontend/theme::theme.index', compact('listCar'));
     }
