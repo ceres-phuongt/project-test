@@ -1,0 +1,17 @@
+{
+    "name": "frontend/theme",
+    "description": "The car module for backend",
+    "type": "package",
+    "autoload": {
+        "psr-4": {
+            "Frontend\\Theme\\": "src"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+              "Frontend\\Theme\\Providers\\ThemeServiceProvider"
+            ]
+        }
+    }
+}
