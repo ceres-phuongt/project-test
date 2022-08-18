@@ -9,7 +9,7 @@
     <meta content="Free HTML Templates" name="description">
 
     <!-- Favicon -->
-    <link href="img/favicon.ico" rel="icon">
+    <link href="{{ asset('vendor/frontends/theme/img/favicon.ico') }}" rel="icon">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -23,35 +23,18 @@
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="{{ asset('vendor/frontends/theme/css/style.css') }}" rel="stylesheet">
+    <link href="{{ asset('vendor/frontends/theme/lib/toastr/toastr.css') }}" rel="stylesheet">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <script type="text/javascript">
+        var siteUrl = '{{ url('/') }}';
+    </script>
 </head>
 
 <body>
 @include('frontend/theme::header')
 
-<!-- Page Header Start -->
-<div class="container-fluid bg-secondary mb-5">
-    <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 300px">
-        @yield('breadscrums')
-        <h1 class="font-weight-semi-bold text-uppercase mb-3">Our Shop</h1>
-        <div class="d-inline-flex">
-            <p class="m-0"><a href="">Home</a></p>
-            <p class="m-0 px-2">-</p>
-            <p class="m-0">Shop</p>
-        </div>
-    </div>
-</div>
-<!-- Page Header End -->
-
-
-<!-- Shop Start -->
-<div class="container-fluid pt-5">
-    <div class="row px-xl-5">
-        <!-- Shop Product Start -->
-        @yield('content')
-    <!-- Shop Product End -->
-    </div>
-</div>
-<!-- Shop End -->
+@yield('breadscrumb')
+@yield('content')
 
 
 <!-- Footer Start -->
@@ -66,15 +49,17 @@
 <!-- JavaScript Libraries -->
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-<script src="{{ asset('vendor/frontends/theme/css/easing/easing.min.js') }}"></script>
-<script src="{{ asset('vendor/frontends/theme/css/owlcarousel/owl.carousel.min.js') }}"></script>
+<script src="{{ asset('vendor/frontends/theme/lib/easing/easing.min.js') }}"></script>
+<script src="{{ asset('vendor/frontends/theme/lib/owlcarousel/owl.carousel.min.js') }}"></script>
 
 <!-- Contact Javascript File -->
 <script src="{{ asset('vendor/frontends/theme/mail/jqBootstrapValidation.min.js') }}"></script>
 <script src="{{ asset('vendor/frontends/theme/mail/contact.js') }}"></script>
 
 <!-- Template Javascript -->
+<script src="{{ asset('vendor/frontends/theme/lib/toastr/toastr.min.js') }}"></script>
 <script src="{{ asset('vendor/frontends/theme/js/main.js') }}"></script>
+<script src="{{ asset('vendor/frontends/theme/js/cart.js') }}"></script>
 @yield('footer')
 </body>
 

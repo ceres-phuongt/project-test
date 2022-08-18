@@ -9,7 +9,7 @@
     <meta content="Free HTML Templates" name="description">
 
     <!-- Favicon -->
-    <link href="img/favicon.ico" rel="icon">
+    <link href="{{ asset('vendor/frontends/theme/img/favicon.ico') }}" rel="icon">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -23,6 +23,7 @@
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="{{ asset('vendor/frontends/theme/css/style.css') }}" rel="stylesheet">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 
 <body>
@@ -71,8 +72,8 @@
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-    <script src="{{ asset('vendor/frontends/theme/css/easing/easing.min.js') }}"></script>
-    <script src="{{ asset('vendor/frontends/theme/css/owlcarousel/owl.carousel.min.js') }}"></script>
+    <script src="{{ asset('vendor/frontends/theme/lib/easing/easing.min.js') }}"></script>
+    <script src="{{ asset('vendor/frontends/theme/lib/owlcarousel/owl.carousel.min.js') }}"></script>
 
     <!-- Contact Javascript File -->
     <script src="{{ asset('vendor/frontends/theme/mail/jqBootstrapValidation.min.js') }}"></script>

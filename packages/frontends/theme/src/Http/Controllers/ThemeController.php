@@ -7,6 +7,10 @@ use Backend\Car\Repositories\Interfaces\CarInterface;
 
 class ThemeController extends Controller
 {
+    /**
+     * [$carRepository description]
+     * @var [type]
+     */
     protected $carRepository;
     public function __construct(CarInterface $carRepository)
     {
@@ -51,6 +55,9 @@ class ThemeController extends Controller
      */
     public function show($id)
     {
+        $car = $this->carRepository->find($id);
+
+        return view('frontend/theme::theme.detail-product', compact('car'));
     }
 
     /**
