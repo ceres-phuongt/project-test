@@ -2,9 +2,9 @@
 
 namespace Frontend\Theme\Providers;
 
-use Backend\Core\Repositories\Eloquent\BaseRepository;
-use Backend\Core\Repositories\Interfaces\RepositoryInterface;
-use Illuminate\Contracts\Debug\ExceptionHandler;
+use Backend\User\Models\User;
+use Frontend\Theme\Http\Middleware\CheckIfNotMember;
+use Frontend\Theme\Http\Middleware\CheckMemberLogin;
 use Illuminate\Routing\Events\RouteMatched;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Event;
@@ -14,6 +14,21 @@ class ThemeServiceProvider extends ServiceProvider
 {
     public function register()
     {
+        config([
+            'auth.guards.member'     => [
+                'driver'   => 'session',
+                'provider' => 'user',
+            ],
+            'auth.providers.members' => [
+                'driver' => 'eloquent',
+                'model'  => User::class,
+            ],
+            'auth.passwords.members' => [
+                'provider' => 'members',
+                'table'    => 'password_resets',
+                'expire'   => 60,
+            ],
+        ]);
     }
 
     public function boot()
@@ -29,5 +44,15 @@ class ThemeServiceProvider extends ServiceProvider
 
         // NOTE: Load configs
         $this->mergeConfigFrom(__DIR__.'/../../config/theme.php', 'theme');
+
+        Event::listen(RouteMatched::class, function () {
+            /**
+             * @var Router $router
+             */
+            $router = $this->app['router'];
+
+            $router->aliasMiddleware('member:guest', CheckIfNotMember::class);
+            $router->aliasMiddleware('member', CheckMemberLogin::class);
+        });
     }
 }

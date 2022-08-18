@@ -12,5 +12,7 @@ Route::group(['namespace' => 'Frontend\Theme\Http\Controllers', 'middleware' => 
         Route::post('updateCart', ['as' => 'updateCart', 'uses' => 'CartController@updateCart']);
         Route::post('removeFromCart', ['as' => 'removeFromCart', 'uses' => 'CartController@removeFromCart']);
         Route::get('login', ['as' => 'login', 'uses' => 'LoginController@showLoginForm']);
+        Route::post('login', ['as' => 'postLogin', 'uses' => 'LoginController@login']);
+        Route::get('logout', ['as' => 'logout', 'uses' => 'LoginController@logOut']);
     });
 });
