@@ -88,9 +88,6 @@
             type: 'POST',
             data: data,
             success: function (response) {
-                // let html = response.html;
-                // $('#cart-content').html(html);
-                // toastr.success('Update cart success', 'Message', { timeOut: 3000, progressBar: true, positionClass: "toast-bottom-right" });
                 window.location.reload();
             }
         });
@@ -109,10 +106,7 @@
             type: 'POST',
             data: data,
             success: function (response) {
-                let html = response.html;
-                $('#cart-content').html(html);
-                toastr.success('Remove item from cart success', 'Message', { timeOut: 3000, progressBar: true, positionClass: "toast-bottom-right" });
-                // window.location.reload();
+                window.location.reload();
             }
         });
     }

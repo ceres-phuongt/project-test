@@ -149,11 +149,8 @@ class CartController extends Controller
                 Cookie::queue(Cookie::make('cart', $dataItem, $minutes));
             }
         }
-        $cookieData = stripslashes(Cookie::get('cart'));
-        $cartData = json_decode($cookieData, true);
 
-        $html = view('frontend/theme::theme.cartAjax', compact('cartData'))->render();
-        return response()->json(['html' => $html]);
+        return;
     }
 
     public function removeFromCart(Request $request)
@@ -181,12 +178,6 @@ class CartController extends Controller
                 }
             }
         }
-
-        $newData = stripslashes(Cookie::get('cart'));
-        $newCartData = json_decode($cookieData, true);
-
-        $html = view('frontend/theme::theme.cartAjax', compact('newCartData'))->render();
-        return response()->json(['html' => $html]);
-        // return;
+        return;
     }
 }
