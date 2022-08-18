@@ -19,7 +19,9 @@ class ThemeController extends Controller
      */
     public function index()
     {
-        return view('frontend/theme::theme.index');
+        $listCar = $this->carRepository->getListCarHomepage(['status' => 'published'], 1);
+
+        return view('frontend/theme::theme.index', compact('listCar'));
     }
 
     /**

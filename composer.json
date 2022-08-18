@@ -14,7 +14,8 @@
         "backend/core": "*@dev",
         "backend/user": "*@dev",
         "backend/dashboard": "*@dev",
-        "backend/car": "*@dev"
+        "backend/car": "*@dev",
+        "frontend/theme": "*@dev"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

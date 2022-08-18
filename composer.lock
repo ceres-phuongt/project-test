@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "84e07105748989560771322ff7832554",
+    "content-hash": "caaba5b86aaca145471754ca1986fd6e",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -526,6 +526,32 @@
                 }
             ],
             "time": "2020-12-29T14:50:06+00:00"
+        },
+        {
+            "name": "frontend/theme",
+            "version": "dev-master",
+            "dist": {
+                "type": "path",
+                "url": "./packages/frontends/theme",
+                "reference": "99cecd4a9f0e20573d85d5a461734ee8b3015c4f"
+            },
+            "type": "package",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Frontend\\Theme\\Providers\\ThemeServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Frontend\\Theme\\": "src"
+                }
+            },
+            "description": "The car module for backend",
+            "transport-options": {
+                "relative": true
+            }
         },
         {
             "name": "fruitcake/laravel-cors",
@@ -5995,16 +6021,16 @@
         },
         {
             "name": "laravel/sail",
-            "version": "v1.15.2",
+            "version": "v1.15.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/sail.git",
-                "reference": "8eb6d7116deda5b0e26153c1993f3e326d67768c"
+                "reference": "853dea1fa866a52a93beccc4e5affdc49b98e7d5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/sail/zipball/8eb6d7116deda5b0e26153c1993f3e326d67768c",
-                "reference": "8eb6d7116deda5b0e26153c1993f3e326d67768c",
+                "url": "https://api.github.com/repos/laravel/sail/zipball/853dea1fa866a52a93beccc4e5affdc49b98e7d5",
+                "reference": "853dea1fa866a52a93beccc4e5affdc49b98e7d5",
                 "shasum": ""
             },
             "require": {
@@ -6051,7 +6077,7 @@
                 "issues": "https://github.com/laravel/sail/issues",
                 "source": "https://github.com/laravel/sail"
             },
-            "time": "2022-08-08T20:02:04+00:00"
+            "time": "2022-08-17T13:17:15+00:00"
         },
         {
             "name": "mockery/mockery",
@@ -8050,7 +8076,8 @@
         "backend/core": 20,
         "backend/user": 20,
         "backend/dashboard": 20,
-        "backend/car": 20
+        "backend/car": 20,
+        "frontend/theme": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,

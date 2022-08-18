@@ -12,4 +12,14 @@ class CarRepository extends BaseRepository implements CarInterface
     {
         return Car::class;
     }
+
+    public function getListCarHomepage(array $where, $limit = null, $select = ['*'], $column = 'id', $order = 'desc')
+    {
+        $this->applyConditions($where);
+        $limit = is_null($limit) ? 10 : $limit;
+        $results = $this->model->orderBy($column, $order)->paginate($limit, $select);
+        $results->appends(app('request')->query());
+
+        return $results;
+    }
 }
