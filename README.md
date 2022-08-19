@@ -141,21 +141,26 @@ docker-compose restart nginx
 - Add record to host config
 window: C:\Windows\System32\drivers\etc
 linux: /etc/hosts
-
+```
 projecttest.doc 127.0.0.1
+```
 ## Install laravel and config
+```
 cd docker/sources/
 git clone {link} projecttest
 cd docker/sources/projecttest
 cp .env.example .env
-
+```
 docker-compose exec --user=laradock workspace bash
-
-php artisan key:generate
+```
 composer install
+php artisan key:generate
 npm install
 npm run dev
 php artisan migrate
 php artisan db:seed
+```
+## Note
 
-## Một số lưu ý
+To check elasticsearch please use kibana or post man to connect.
+Example: Postman call: http://localhost:9200/{Index name}/_mapping?pretty

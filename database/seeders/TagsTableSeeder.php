@@ -13,6 +13,17 @@ class TagsTableSeeder extends Seeder
      */
     public function run()
     {
-        //
+        Schema::disableForeignKeyConstraints();
+        EngineSize::truncate();
+        Schema::enableForeignKeyConstraints();
+
+        $arrray = ['2 doors', '4 doors' , 'Red', 'Yellow', 'Black', 'White'];
+
+        foreach ($arrray as $item) {
+            DB::table('tags')->insert([
+                'name'   => $item,
+                'status' => 'published'
+            ]);
+        }
     }
 }
