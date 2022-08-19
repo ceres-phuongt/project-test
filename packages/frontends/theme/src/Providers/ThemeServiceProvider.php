@@ -17,7 +17,7 @@ class ThemeServiceProvider extends ServiceProvider
         config([
             'auth.guards.member'     => [
                 'driver'   => 'session',
-                'provider' => 'user',
+                'provider' => 'members',
             ],
             'auth.providers.members' => [
                 'driver' => 'eloquent',

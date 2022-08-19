@@ -3,7 +3,16 @@
     <div class="row bg-secondary py-2 px-xl-5">
         <div class="col-lg-6 d-none d-lg-block">
             <div class="d-inline-flex align-items-center">
-                <a class="text-dark" href="{{ route('frontend.login') }}">Login</a>
+                @if(\Auth::guard('member')->check())
+                    @php
+                        $user = Auth::guard('member')->user();
+                    @endphp
+                    Hello <a href="#" style="margin-left: 5px;">{{ $user->name }}</a>
+                    <span class="text-muted px-2">|</span>
+                    <a class="text-dark" href="{{ route('frontend.logout') }}">Logout</a>
+                @else
+                    <a class="text-dark" href="{{ route('frontend.login') }}">Login</a>
+                @endif
             </div>
         </div>
         <div class="col-lg-6 text-center text-lg-right">

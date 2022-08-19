@@ -18,7 +18,7 @@ class CheckMemberLogin
     public function handle(Request $request, Closure $next)
     {
         if (Auth::guard('member')->check()) {
-            return redirect(route('frontend.index'));
+            return redirect(route('frontend.homepage'));
         }
 
         return $next($request);

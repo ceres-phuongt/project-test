@@ -24,14 +24,15 @@
             <div class="col-lg-7 mb-5">
                 <div class="contact-form">
                     <div id="success"></div>
-                    <form name="sentMessage" id="contactForm" novalidate="novalidate" action="{{ route('frontend.login') }}" method="post">
+                    <form name="loginForm" id="loginForm" novalidate="novalidate" action="{{ route('frontend.login') }}" method="post">
+                        {!! csrf_field() !!}
                         <div class="control-group">
                             <input type="email" class="form-control" id="email" name="email" placeholder="Your Email"
                                 required="required" data-validation-required-message="Please enter your email" />
                             <p class="help-block text-danger"></p>
                         </div>
                         <div class="control-group">
-                            <input type="password" class="form-control" id="subject" placeholder="Password"
+                            <input type="password" class="form-control" id="password" name="password" placeholder="Password"
                                 required="required" data-validation-required-message="Please enter your password" />
                             <p class="help-block text-danger"></p>
                         </div>
