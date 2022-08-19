@@ -7,10 +7,14 @@
             "Frontend\\Theme\\": "src"
         }
     },
+    "require": {
+        "laravel/scout": "^9.4",
+        "matchish/laravel-scout-elasticsearch": "^4.0"
+    },
     "extra": {
         "laravel": {
             "providers": [
-              "Frontend\\Theme\\Providers\\ThemeServiceProvider"
+                "Frontend\\Theme\\Providers\\ThemeServiceProvider"
             ]
         }
     }

@@ -5,6 +5,7 @@ namespace Frontend\Theme\Providers;
 use Backend\User\Models\User;
 use Frontend\Theme\Http\Middleware\CheckIfNotMember;
 use Frontend\Theme\Http\Middleware\CheckMemberLogin;
+use Illuminate\Foundation\AliasLoader;
 use Illuminate\Routing\Events\RouteMatched;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Event;
@@ -44,6 +45,10 @@ class ThemeServiceProvider extends ServiceProvider
 
         // NOTE: Load configs
         $this->mergeConfigFrom(__DIR__.'/../../config/theme.php', 'theme');
+        $this->mergeConfigFrom(__DIR__.'/../../config/scout.php', 'scout');
+        $this->mergeConfigFrom(__DIR__.'/../../config/elasticsearch.php', 'elasticsearch');
+
+        // AliasLoader::getInstance()->alias('ElasticSearchServiceProvider', \Matchish\ScoutElasticSearch\ElasticSearchServiceProvider::class);
 
         Event::listen(RouteMatched::class, function () {
             /**

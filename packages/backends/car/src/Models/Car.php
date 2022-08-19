@@ -5,9 +5,11 @@ use Illuminate\Database\Eloquent\Model;
 use Backend\User\Models\User;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Laravel\Scout\Searchable;
 
 class Car extends Model
 {
+    use Searchable;
     /**
      * The database table used by the model.
      *
@@ -49,6 +51,56 @@ class Car extends Model
         'user_id',
         'status',
     ];
+
+    /**
+     * Get the name of the index associated with the model.
+     *
+     * @return string
+     */
+    public function searchableAs()
+    {
+        return 'cars_index';
+    }
+
+    /**
+     * Get the indexable data array for the model.
+     *
+     * @return array
+     */
+    public function toSearchableArray()
+    {
+        $array = $this->toArray();
+
+         $array['engine_size_name'] = $this->engineSize->name;
+         $array['make_name'] = $this->make->email;
+
+        return $array;
+    }
+
+    protected function makeAllSearchableUsing($query)
+    {
+//        return $query->with('make');
+    }
+
+    /**
+     * Get the value used to index the model.
+     *
+     * @return mixed
+     */
+    public function getScoutKey()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Get the key name used to index the model.
+     *
+     * @return mixed
+     */
+    public function getScoutKeyName()
+    {
+        return 'id';
+    }
 
     /**
      * @return BelongsTo

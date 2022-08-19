@@ -11,6 +11,7 @@ Route::group(['namespace' => 'Frontend\Theme\Http\Controllers', 'middleware' => 
         Route::post('addToCart', ['as' => 'addToCart', 'uses' => 'CartController@addToCart']);
         Route::post('updateCart', ['as' => 'updateCart', 'uses' => 'CartController@updateCart']);
         Route::post('removeFromCart', ['as' => 'removeFromCart', 'uses' => 'CartController@removeFromCart']);
+        Route::get('search', ['as' => 'search', 'uses' => 'SearchController@index']);
 
         Route::group(['middleware' => 'member:guest'], function () {
             Route::get('login', ['as' => 'login', 'uses' => 'LoginController@showLoginForm']);
