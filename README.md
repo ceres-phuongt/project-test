@@ -1,64 +1,161 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+## Setup Laradock to run Enviroment
+Read more about laradock: https://laradock.io/introduction/
+1. Create new folder "docker"
+mkdir docker
+2. Clone Laradock
+mkdir laradock
+mkdir docker/sources
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+git clone https://github.com/Laradock/laradock.git
 
-## About Laravel
+3. Config .env for laradock
+cp .env.example .env
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Note:
+Edit value in here to custom image when build
+APP_CODE_PATH_HOST=../sources (Project source is here)
+PHP_VERSION=7.2 (PHP version to run your project)
+4. Run your containers:
+docker-compose up -d nginx mysql phpmyadmin redis elasticsearch  kibana workspace
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Note:
+Kibana: To run kibana, the system need a new config:
+sysctl -w vm.max_map_count=262144 (run in linux bash)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+5. Default port
+nginx 80/443
+php-fpm:9003
+mysql:3306
+phpmyadmin:8081
+redis:6379
+kibana:5601
+elasticsearch:9200/9300
 
-## Learning Laravel
+## Config Enviroment for project
+Default value for:
+- mysql:
+port:3306
+database: default
+database: default
+password: secret
+- phpmyadmin: localhost:8081
+Fill the form with mysql data, put "mysql" in for Server Input to connect.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Config nginx for new domain
+- Create projecttest.doc.conf in "docker/laradock/nginx/sites"
+When rebuild the image the system auto copy config file here to "/etc/nginx/sites-available"
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+```
+server {
 
-## Laravel Sponsors
+    # For https
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2 ipv6only=on;
+    ssl_certificate /etc/nginx/ssl/default.crt;
+    ssl_certificate_key /etc/nginx/ssl/default.key;
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+    server_name projecttest.doc;
+    root /var/www/projectest/public;
+    index index.php index.html index.htm;
 
-### Premium Partners
+    location / {
+         try_files $uri $uri/ /index.php$is_args$args;
+    }
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+    location ~ \.php$ {
+        try_files $uri /index.php =404;
+        fastcgi_pass php-upstream;
+        fastcgi_index index.php;
+        fastcgi_buffers 16 16k;
+        fastcgi_buffer_size 32k;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        #fixes timeouts
+        fastcgi_read_timeout 600;
+        include fastcgi_params;
+    }
 
-## Contributing
+    location ~ /\.ht {
+        deny all;
+    }
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+    location /.well-known/acme-challenge/ {
+        root /var/www/letsencrypt/;
+        log_not_found off;
+    }
 
-## Code of Conduct
+    error_log /var/log/nginx/project_test_error.log;
+    access_log /var/log/nginx/project_test_access.log;
+}
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+server {
+    listen 80;
+    server_name projecttest.doc;
 
-## Security Vulnerabilities
+    return 301 https://$host$uri;
+}
+```
+- For none https
+```
+server {
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+    listen 80 laravel1;
+    listen [::]:80 laravel1 ipv6only=on;
 
-## License
+    server_name projecttest.doc;
+    root /var/www/projectest/public;
+    index index.php index.html index.htm;
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+    location / {
+         try_files $uri $uri/ /index.php$is_args$args;
+    }
+
+    location ~ \.php$ {
+        try_files $uri /index.php =404;
+        fastcgi_pass php-upstream;
+        fastcgi_index index.php;
+        fastcgi_buffers 16 16k;
+        fastcgi_buffer_size 32k;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        #fixes timeouts
+        fastcgi_read_timeout 600;
+        include fastcgi_params;
+    }
+
+    location ~ /\.ht {
+        deny all;
+    }
+
+    location /.well-known/acme-challenge/ {
+        root /var/www/letsencrypt/;
+        log_not_found off;
+    }
+
+    error_log /var/log/nginx/laravel1_error.log;
+    access_log /var/log/nginx/laravel1_access.log;
+}
+```
+
+ - If you add nginx.config after build image, please run:
+docker-compose restart nginx
+
+- Add record to host config
+window: C:\Windows\System32\drivers\etc
+linux: /etc/hosts
+
+projecttest.doc 127.0.0.1
+## Install laravel and config
+cd docker/sources/
+git clone {link} projecttest
+cd docker/sources/projecttest
+cp .env.example .env
+
+docker-compose exec --user=laradock workspace bash
+
+php artisan key:generate
+composer install
+npm install
+npm run dev
+php artisan migrate
+php artisan db:seed
+
+## Một số lưu ý
