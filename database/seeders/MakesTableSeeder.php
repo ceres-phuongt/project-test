@@ -1,8 +1,10 @@
 <?php
-
 namespace Database\Seeders;
 
+use Backend\Car\Models\Make;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 class MakesTableSeeder extends Seeder
 {
@@ -13,9 +15,14 @@ class MakesTableSeeder extends Seeder
      */
     public function run()
     {
+        Schema::disableForeignKeyConstraints();
+        Make::truncate();
+        Schema::enableForeignKeyConstraints();
+
         $arrray = ['Toyota', 'Honda', 'BMW', 'Volkswagen', 'Daimler', 'Ford', 'Tesla', 'Ferrari',
                 'Ferrari', 'Lamborghini', 'Bentley', 'Audi', 'Jeep', 'Subaru', 'Hyundai', 'Jaguar', 'Mazda'];
-        $faker = Faker\Factory::create();
+
+        $faker = \Faker\Factory::create();
 
         foreach ($arrray as $item) {
             DB::table('makes')->insert([

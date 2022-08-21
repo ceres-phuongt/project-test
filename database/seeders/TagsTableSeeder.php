@@ -1,8 +1,11 @@
 <?php
-
 namespace Database\Seeders;
 
+use Backend\Car\Models\EngineSize;
+use Backend\Car\Models\Tag;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 class TagsTableSeeder extends Seeder
 {
@@ -14,7 +17,7 @@ class TagsTableSeeder extends Seeder
     public function run()
     {
         Schema::disableForeignKeyConstraints();
-        EngineSize::truncate();
+        Tag::truncate();
         Schema::enableForeignKeyConstraints();
 
         $arrray = ['2 doors', '4 doors' , 'Red', 'Yellow', 'Black', 'White'];

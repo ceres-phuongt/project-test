@@ -1,10 +1,11 @@
 <?php
-
 namespace Database\Seeders;
 
+use Backend\User\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
 
 class UsersTableSeeder extends Seeder
@@ -20,6 +21,18 @@ class UsersTableSeeder extends Seeder
         User::truncate();
         Schema::enableForeignKeyConstraints();
 
-        \Backend\User\Models\User::factory(10)->create();
+        // \Backend\User\Models\User::factory(10)->create();
+        $faker = \Faker\Factory::create();
+
+        for ($i = 0; $i <= 10; $i++) {
+            DB::table('users')->insert([
+                'name'              => $faker->name(),
+                'email'             => $faker->unique()->safeEmail(),
+                'email_verified_at' => now(),
+                'password'          => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+                'user_type'         => $faker->randomElement(['admin', 'member']),
+                'remember_token'    => Str::random(10),
+            ]);
+        }
     }
 }

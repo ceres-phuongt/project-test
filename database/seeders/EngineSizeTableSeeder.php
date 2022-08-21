@@ -1,8 +1,10 @@
 <?php
-
 namespace Database\Seeders;
 
+use Backend\Car\Models\EngineSize;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 class EngineSizeTableSeeder extends Seeder
 {
