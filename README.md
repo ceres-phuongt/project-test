@@ -98,8 +98,8 @@ server {
 ```
 server {
 
-    listen 80 laravel1;
-    listen [::]:80 laravel1 ipv6only=on;
+    listen 80;
+    listen [::]:80 ipv6only=on;
 
     server_name projecttest.doc;
     root /var/www/projectest/public;
@@ -170,7 +170,7 @@ LOG_DEPRECATIONS_CHANNEL=null
 LOG_LEVEL=debug
 
 DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
+DB_HOST=mysql
 DB_PORT=3306
 DB_DATABASE=projecttest.doc
 DB_USERNAME=root
@@ -212,7 +212,7 @@ PUSHER_APP_CLUSTER=mt1
 MIX_PUSHER_APP_KEY="${PUSHER_APP_KEY}"
 MIX_PUSHER_APP_CLUSTER="${PUSHER_APP_CLUSTER}"
 SCOUT_DRIVER=Matchish\ScoutElasticSearch\Engines\ElasticSearchEngine
-ELASTICSEARCH_HOST=localhost:9200
+ELASTICSEARCH_HOST=elasticsearch
 ```
 Step 3: Build project
 ```
@@ -226,13 +226,18 @@ php artisan db:seed
 
 ```
 chmod -R 755 bootstrap/cache
-sudo chmod -R 755 storage
+chmod -R 755 storage
 ```
 
 ```
 php artisan scout:import "Backend\Car\Models\Car"
 ```
 ## Note
-
 To check elasticsearch please use kibana or post man to connect.
 Example: Postman call: http://localhost:9200/{Index name}/_mapping?pretty
+
+## To login:
+-Backend:
+Access: http://projecttest.doc/auth/login
+Admin User: admin@gmail.com / password
+Mmember User: member@gmail.com / password

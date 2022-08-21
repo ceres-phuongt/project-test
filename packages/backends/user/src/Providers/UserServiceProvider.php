@@ -40,8 +40,9 @@ class UserServiceProvider extends ServiceProvider
              */
             $router = $this->app['router'];
 
-            $router->aliasMiddleware('member', RedirectIfAuthenticated::class);
-            $router->aliasMiddleware('member:guest', CheckAdminLogin::class);
+            $router->aliasMiddleware('auth', Authenticate::class);
+            $router->aliasMiddleware('guest', RedirectIfAuthenticated::class);
+            $router->aliasMiddleware('checkAdminLogin', CheckAdminLogin::class);
         });
 
         $this->app->booted(function () {

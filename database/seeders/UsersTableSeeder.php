@@ -22,6 +22,24 @@ class UsersTableSeeder extends Seeder
         Schema::enableForeignKeyConstraints();
 
         // \Backend\User\Models\User::factory(10)->create();
+        DB::table('users')->insert([
+                'name'              => 'Admin',
+                'email'             => 'admin@gmail.com',
+                'email_verified_at' => now(),
+                'password'          => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+                'user_type'         => 'admin',
+                'remember_token'    => Str::random(10),
+            ]);
+
+        DB::table('users')->insert([
+                'name'              => 'Member',
+                'email'             => 'admin@gmail.com',
+                'email_verified_at' => now(),
+                'password'          => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+                'user_type'         => 'admin',
+                'remember_token'    => Str::random(10),
+            ]);
+
         $faker = \Faker\Factory::create();
 
         for ($i = 0; $i <= 10; $i++) {
