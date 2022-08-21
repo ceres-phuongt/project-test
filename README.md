@@ -3,7 +3,7 @@ Read more about laradock: https://laradock.io/introduction/
 1. Create new folder "docker"
 mkdir docker
 2. Clone Laradock
-mkdir laradock
+cd docker
 mkdir docker/sources
 
 git clone https://github.com/Laradock/laradock.git
@@ -14,7 +14,7 @@ cp .env.example .env
 Note:
 Edit value in here to custom image when build
 APP_CODE_PATH_HOST=../sources (Project source is here)
-PHP_VERSION=7.2 (PHP version to run your project)
+PHP_VERSION=7.4 (PHP version to run your project)
 4. Run your containers:
 docker-compose up -d nginx mysql phpmyadmin redis elasticsearch  kibana workspace
 
@@ -42,7 +42,7 @@ password: secret
 Fill the form with mysql data, put "mysql" in for Server Input to connect.
 
 ### Config nginx for new domain
-- Create projecttest.doc.conf in "docker/laradock/nginx/sites"
+- Create projecttest.conf in "docker/laradock/nginx/sites"
 When rebuild the image the system auto copy config file here to "/etc/nginx/sites-available"
 
 ```
@@ -140,25 +140,97 @@ docker-compose restart nginx
 
 - Add record to host config
 window: C:\Windows\System32\drivers\etc
+```
+127.0.0.1 projecttest.doc
+```
 linux: /etc/hosts
 ```
 projecttest.doc 127.0.0.1
 ```
 ## Install laravel and config
+Step 1: Using bash in workspace (Your sources was here)
+
+docker-compose exec --user=laradock workspace bash
+Current dir: "/var/www"
 ```
-cd docker/sources/
 git clone {link} projecttest
-cd docker/sources/projecttest
+cd projecttest
 cp .env.example .env
 ```
-docker-compose exec --user=laradock workspace bash
+Step 2:  Edit .env file:
+```
+APP_NAME=Laravel
+APP_ENV=local
+APP_KEY=base64:eS9Ftffv1mla6HMC3F5Ez2Nb9hpA8ioZ8qm2oH5Zfuw=
+APP_DEBUG=true
+APP_URL=http://projecttest.doc
+
+LOG_CHANNEL=stack
+LOG_DEPRECATIONS_CHANNEL=null
+LOG_LEVEL=debug
+
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=projecttest.doc
+DB_USERNAME=root
+DB_PASSWORD=root
+
+BROADCAST_DRIVER=log
+CACHE_DRIVER=file
+FILESYSTEM_DRIVER=local
+QUEUE_CONNECTION=sync
+SESSION_DRIVER=file
+SESSION_LIFETIME=120
+
+MEMCACHED_HOST=127.0.0.1
+
+REDIS_HOST=127.0.0.1
+REDIS_PASSWORD=null
+REDIS_PORT=6379
+
+MAIL_MAILER=smtp
+MAIL_HOST=mailhog
+MAIL_PORT=1025
+MAIL_USERNAME=null
+MAIL_PASSWORD=null
+MAIL_ENCRYPTION=null
+MAIL_FROM_ADDRESS=null
+MAIL_FROM_NAME="${APP_NAME}"
+
+AWS_ACCESS_KEY_ID=
+AWS_SECRET_ACCESS_KEY=
+AWS_DEFAULT_REGION=us-east-1
+AWS_BUCKET=
+AWS_USE_PATH_STYLE_ENDPOINT=false
+
+PUSHER_APP_ID=
+PUSHER_APP_KEY=
+PUSHER_APP_SECRET=
+PUSHER_APP_CLUSTER=mt1
+
+MIX_PUSHER_APP_KEY="${PUSHER_APP_KEY}"
+MIX_PUSHER_APP_CLUSTER="${PUSHER_APP_CLUSTER}"
+SCOUT_DRIVER=Matchish\ScoutElasticSearch\Engines\ElasticSearchEngine
+ELASTICSEARCH_HOST=localhost:9200
+```
+Step 3: Build project
 ```
 composer install
-php artisan key:generate
+#php artisan key:generate
 npm install
 npm run dev
 php artisan migrate
 php artisan db:seed
+```
+
+```
+chmod -R 755 bootstrap/cache
+sudo chmod -R 755 storage
+```
+
+```
+php artisan scout:import "Backend\Car\Models\Car"
 ```
 ## Note
 

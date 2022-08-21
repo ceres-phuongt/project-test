@@ -8,7 +8,7 @@ const dist = 'public/vendor/backends/' + directory;
 
 mix
     .js(source + '/resources/assets/js/script.js', dist + '/js')
-    .sass(source + '/resources/assets/sass/style.scss', dist + '/js')
+    .sass(source + '/resources/assets/sass/style.scss', dist + '/css')
 
     .copyDirectory(source + '/public', dist)
     .copyDirectory(dist + '/js', source + '/public/js')
